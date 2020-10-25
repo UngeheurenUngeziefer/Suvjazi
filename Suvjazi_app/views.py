@@ -1,4 +1,7 @@
 from django.shortcuts import render
 
+from Suvjazi_app.models import Institute
+
 def index(request):
-	return render(request, 'Suvjazi_app/index.html')
+	institutes = Institute.objects.all()
+	return render(request, 'Suvjazi_app/index.html', {'institutes': institutes})

@@ -1,1 +1,18 @@
-<p>Start Page</p>
+{% extends 'Suvjazi_app/base.html' %}
+{% block content %}
+
+{% for institute in institutes %}
+<div class='card'>
+	<div class='card-body'>
+		<h5 class='card-title'>{{ institute.title }}</h5>
+		<p class='card-text'>{{ institute.description | truncatechars:100 }}</p>
+		<img src='{{ institute.image }}' width=400 height=200 class='card-image'></img>
+		<a href='admin/Suvjazi_app/institute/{{ institute.id }}/change/'\
+class='card-link'>Edit</a>
+		<a href='admin/Suvjazi_app/institute/{{ institute.id }}/delete/'\
+class='card-link'>Delete</a>
+	</div>
+</div>
+{% endfor %}
+
+{% endblock %}

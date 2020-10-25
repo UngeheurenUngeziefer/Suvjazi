@@ -1,3 +1,5 @@
 from django.contrib import admin
 
-# Register your models here.
+from Suvjazi_app.models import Institute
+
+admin.site.register(Institute)
