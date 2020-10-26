@@ -1,0 +1,10 @@
+{% extends 'Suvjazi_app/base.html' %}
+{% block content %}
+<div class="jumbotron">
+	<div class="container">
+		<h1 class="display-3">{{ person.name }}</h1>
+		<div class="lead">{{ person.description }}</div>
+	</div>
+</div>
+<a href='{% url "index" %}'>Back<a>
+{% endblock %}

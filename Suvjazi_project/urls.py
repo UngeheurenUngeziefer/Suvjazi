@@ -17,5 +17,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', Suvjazi_app_views.index, name='index')
+    path('', Suvjazi_app_views.index, name='index'),
+    path('person/<slug:slug>/', Suvjazi_app_views.person_detail, name='person_detail'),
+    path('institute/<slug:slug>/', Suvjazi_app_views.institute_detail, name='institute_detail'),
+    path('all_persons', Suvjazi_app_views.all_persons, name='all_persons'),
 ] 
