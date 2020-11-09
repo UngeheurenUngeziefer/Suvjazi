@@ -4,7 +4,8 @@ from Suvjazi_app.models import Person, Institute
 
 def index(request):
 	institutes = Institute.objects.all()
-	return render(request, 'Suvjazi_app/index.html', {'institutes': institutes, 'person': person})
+	persones = Person.objects.all()
+	return render(request, 'Suvjazi_app/index.html', {'institutes': institutes, 'persones': persones})
 
 def all_persons(request):
 	persons = Person.objects.all()
