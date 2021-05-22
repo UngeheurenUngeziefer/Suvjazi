@@ -6,3 +6,6 @@
 ## url for about page created
 ## templates folder created
 ## view for project created
+## static usage added (test img added)
+## templates usage added
+## first html added
