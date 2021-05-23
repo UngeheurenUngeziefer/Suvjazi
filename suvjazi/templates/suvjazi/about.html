@@ -7,15 +7,16 @@
         <title>Suvjazi</title>
     </head>
     <body>
-        <h1>Suvjazi says...</h1>
+        <h1>About page</h1>
         <div>
             hey there partner! <br />
-            <strong>{{ boldmessage }}</strong><br />
+            <strong>{{ message }}</strong><br />
         </div>
         <div>
-            <a href="about">About</a><br />
+            <a href="/">Index</a><br />
             <img src="{% static 'images/test_logo.png' %}"
                  alt='Logo picture' />
+            <img src="{{ MEDIA_URL }}cat.jpg">
         </div>
     </body>
 </html>

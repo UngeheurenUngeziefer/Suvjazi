@@ -6,6 +6,3 @@ from django.http import HttpResponse
 def suvjazi(request):
     return HttpResponse('First text!')
 
-def about(request):
-    return HttpResponse('About page!')
-

@@ -9,3 +9,8 @@
 ## static usage added (test img added)
 ## templates usage added
 ## first html added
+## media usage added (test img added)
+## about moved to general urls
+## about html added
+## models for Person and Company created with m-to-m relations
+## superuser created, models added to admin panel
