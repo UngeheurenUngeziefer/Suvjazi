@@ -14,3 +14,5 @@
 ## about html added
 ## models for Person and Company created with m-to-m relations
 ## superuser created, models added to admin panel
+## script for populating db created (outdated)
+## models switched, manyToMany fields logic understandable now
