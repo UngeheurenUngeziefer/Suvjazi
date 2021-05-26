@@ -16,3 +16,4 @@
 ## superuser created, models added to admin panel
 ## script for populating db created (outdated)
 ## models switched, manyToMany fields logic understandable now
+## switched populating script
