@@ -17,3 +17,4 @@
 ## script for populating db created (outdated)
 ## models switched, manyToMany fields logic understandable now
 ## switched populating script
+## populating script updated, worked fine

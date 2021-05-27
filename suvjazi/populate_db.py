@@ -1,5 +1,3 @@
-# update script - change logic from company->persons to person->companies
-
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'suvjazi.settings')
@@ -10,61 +8,96 @@ django.setup()
 from suvjazi_app.models import Company, Person
 
 def populate_db():
-    # function to automatic population of django app db
-    companyOne_people = [
-        {'first_name': 'Oleg',
-         'last_name': 'Devyatov'},
-        {'first_name': 'Anna',
-         'last_name': 'Smith'},
-        {'first_name': 'Ellie',
-         'last_name': 'Stockholm'}]
+    # function to populate django app db
+    person1 = [
+        {'company_name': 'Company_1',
+         'url': 'http://example.com'},
+        {'company_name': 'Company_2',
+         'url': 'http://example2.com'}
+        ]
 
-    companyTwo_people = [
-        {'first_name': 'Kristina',
-         'last_name': 'Alova'},
-        {'first_name': 'Greg',
-         'last_name': 'Gort'},
-        {'first_name': 'Kanie',
-         'last_name': 'West'}]
+    person2 = [
+        {'company_name': 'Company_2',
+         'url': 'http://example2.com'},
+        {'company_name': 'Company_3',
+         'url': 'http://example3.com'}
+        ]
 
-    companyThree_people = [
-        {'first_name': 'Ken',
-         'last_name': 'Barbie'},
-        {'first_name': 'Low',
-         'last_name': 'Temp'},
-        {'first_name': 'Call',
-         'last_name': 'Newman'}]
-        
-    companies = {'Company One': {'companies': companyOne_people},
-                 'Company Two': {'companies': companyTwo_people},
-                 'Company Three': {'companies': companyThree_people}}
+    person3 = [
+        {'company_name': 'Company_1',
+         'url': 'http://example.com'},
+        {'company_name': 'Company_2',
+         'url': 'http://example2.com'},
+        {'company_name': 'Company_4',
+         'url': 'http://example3.com'}
+        ]
+
+    person4 = [
+        {'company_name': 'Company_5',
+         'url': 'http://example5.com'}
+        ]
+    
+    person5 = [
+        {'company_name': 'Company_1',
+         'url': 'http://example1.com'}, 
+        {'company_name': 'Company_5',
+         'url': 'http://example5.com'} 
+        ]
+
+    persons = {'Annie Krotova': {'persons': person1},
+               'Eminem Marshall': {'persons': person2},
+               'Evanessence Smith': {'persons': person3},
+               'Ivan Ivanov': {'persons': person4},
+               'Amir Hadjatin': {'persons': person1},
+               'Greg Stivenson': {'persons': person2},
+               'Anna Vasileko': {'persons': person3},
+               'Call Newman': {'persons': person4},
+               'Low Temp': {'persons': person5},
+               'Ken Barbie': {'persons': person1},
+               'Kanie West': {'persons': person2},
+               'Greg Gort': {'persons': person3},
+               'Kristina Alova': {'persons': person4},
+               'Ellie Stockholm': {'persons': person5},
+               'Anna Smith': {'persons': person1},
+               'Oleg Devyatov': {'persons': person2}}
+
 
     # iterate through company&persons data
-    for company, company_data in companies.items():
-        company = add_company(company)
-        for person in company_data['companies']:
-            add_person(company, person['first_name'], person['last_name'])
+    for person, person_data in persons.items():
+        person = add_person(person)
+        for company in person_data['persons']:
+            add_company(company['company_name'], company['url'], person)
 
-    # print the categories we have added
-    for company in Company.objects.all():
-        for person in Person.objects.filter(company=company):
-            print(f'{company} - {person}')
+    
+    # print the companies we have added
+    for person in Person.objects.all():
+        for company in Company.objects.filter(person=person):
+            print(f'{person} - {company}')
 
 
-def add_person(company, first_name, last_name):
+def add_company(company_name, company_url, person):
+    # company creation
+    company = Company.objects.get_or_create(company_name=company_name)[0]
+    company.url = company_url
+    company.save()
+    person.company.add(company)
+
+    return company
+
+
+def add_person(person_name):
     # person creation
+    first_name = person_name.split()[0]
+    last_name = person_name.split()[1]
+
     person = Person.objects.get_or_create(first_name=first_name, 
                                           last_name=last_name)[0]
-    person.company=company
     person.save()
     return person
 
-def add_company(company_name):
-    # company creation
-    company = Company.objects.get_or_create(company_name=company_name)[0]
-    company.save()
-    return company
+   
+
 
 if __name__ == '__main__':
-    print('Start population script...')
+    print('Start populating DB...')
     populate_db()
