@@ -1,4 +1,5 @@
 import os
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'suvjazi.settings')
 
@@ -11,37 +12,37 @@ def populate_db():
     # function to populate django app db
     person1 = [
         {'company_name': 'Company_1',
-         'url': 'http://example.com'},
+         'company_url': 'http://example.com'},
         {'company_name': 'Company_2',
-         'url': 'http://example2.com'}
+         'company_url': 'http://example2.com'}
         ]
 
     person2 = [
         {'company_name': 'Company_2',
-         'url': 'http://example2.com'},
+         'company_url': 'http://example2.com'},
         {'company_name': 'Company_3',
-         'url': 'http://example3.com'}
+         'company_url': 'http://example3.com'}
         ]
 
     person3 = [
         {'company_name': 'Company_1',
-         'url': 'http://example.com'},
+         'company_url': 'http://example.com'},
         {'company_name': 'Company_2',
-         'url': 'http://example2.com'},
+         'company_url': 'http://example2.com'},
         {'company_name': 'Company_4',
-         'url': 'http://example3.com'}
+         'company_url': 'http://example3.com'}
         ]
 
     person4 = [
         {'company_name': 'Company_5',
-         'url': 'http://example5.com'}
+         'company_url': 'http://example5.com'}
         ]
     
     person5 = [
         {'company_name': 'Company_1',
-         'url': 'http://example1.com'}, 
+         'company_url': 'http://example1.com'}, 
         {'company_name': 'Company_5',
-         'url': 'http://example5.com'} 
+         'company_url': 'http://example5.com'} 
         ]
 
     persons = {'Annie Krotova': {'persons': person1},
@@ -66,7 +67,7 @@ def populate_db():
     for person, person_data in persons.items():
         person = add_person(person)
         for company in person_data['persons']:
-            add_company(company['company_name'], company['url'], person)
+            add_company(company['company_name'], company['company_url'], person)
 
     
     # print the companies we have added
@@ -78,7 +79,7 @@ def populate_db():
 def add_company(company_name, company_url, person):
     # company creation
     company = Company.objects.get_or_create(company_name=company_name)[0]
-    company.url = company_url
+    company.company_url = company_url
     company.save()
     person.company.add(company)
 
@@ -96,8 +97,6 @@ def add_person(person_name):
     return person
 
    
-
-
 if __name__ == '__main__':
     print('Start populating DB...')
     populate_db()

@@ -18,3 +18,6 @@
 ## models switched, manyToMany fields logic understandable now
 ## switched populating script
 ## populating script updated, worked fine
+## Company field url renamed to company_url
+## Company objects all fields in admin panel
+## Person objects all fields in admin panel

@@ -1,10 +1,10 @@
 from django.db import models
 
 
-# model for their job place
 class Company(models.Model):
+    # model for companies
     company_name = models.CharField(max_length=128, unique=True)
-    url = models.URLField()
+    company_url = models.URLField()
 
     class Meta:
         verbose_name_plural = 'Companies'
@@ -13,8 +13,8 @@ class Company(models.Model):
         return self.company_name
 
 
-# model for humans
 class Person(models.Model):
+    # model for humans
     first_name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=128)
     company = models.ManyToManyField(Company)
