@@ -4,7 +4,7 @@ from suvjazi_app.models import Person, Company
 
 class Person_Admin(admin.ModelAdmin):
     # to show many person fields in admin panel
-    list_display = ('last_name', 'first_name', 'companies')
+    list_display = ('full_name', 'companies')
 
     def companies(self, obj):
         # to show list of companies of persons in admin panel
@@ -15,9 +15,9 @@ admin.site.register(Person, Person_Admin)
 
 class Company_Admin(admin.ModelAdmin):
     # to show many company fields in admin panel
-    list_display = ('company_name', 'company_url', 'persons')
+    list_display = ('company_name', 'company_url', 'employees')
 
-    def persons(self, obj):
-        return ', '.join([p.last_name for p in obj.person_set.all()])
+    def employees(self, obj):
+        return ', '.join([p.full_name for p in obj.person_set.all()])
 
 admin.site.register(Company, Company_Admin)

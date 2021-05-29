@@ -21,3 +21,5 @@
 ## Company field url renamed to company_url
 ## Company objects all fields in admin panel
 ## Person objects all fields in admin panel
+## tests created
+## nice view for Person and Company in admin panel and console also
