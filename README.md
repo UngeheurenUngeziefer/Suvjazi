@@ -23,3 +23,5 @@
 ## Person objects all fields in admin panel
 ## tests created
 ## nice view for Person and Company in admin panel and console also
+## tests 100% coverage
+## PROJECT_DIR added

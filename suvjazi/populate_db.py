@@ -98,5 +98,5 @@ def add_person(person_name):
 
    
 if __name__ == '__main__':
-    print('Start populating DB...')
-    populate_db()
+    print('Start populating DB...') # pragma: no cover
+    populate_db()                   # pragma: no cover
