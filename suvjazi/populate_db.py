@@ -6,7 +6,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE',
 import django
 django.setup()
 
-from suvjazi_app.models import Company, Person
+from suvjazi_app.models import Company, Person, CompanyMembership
 
 def populate_db():
     # function to populate django app db

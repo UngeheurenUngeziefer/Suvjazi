@@ -1,23 +1,23 @@
 from django.contrib import admin
-from suvjazi_app.models import Person, Company
+from suvjazi_app.models import Person, Company, CompanyMembership
 
 
-class Person_Admin(admin.ModelAdmin):
-    # to show many person fields in admin panel
-    list_display = ('full_name', 'companies')
-
-    def companies(self, obj):
-        # to show list of companies of persons in admin panel
-        return ', '.join([c.company_name for c in obj.company.all()])
-
-admin.site.register(Person, Person_Admin)
-
-
-class Company_Admin(admin.ModelAdmin):
-    # to show many company fields in admin panel
+class CompanyAdmin(admin.ModelAdmin):
     list_display = ('company_name', 'company_url', 'employees')
 
     def employees(self, obj):
-        return ', '.join([p.full_name for p in obj.person_set.all()])
+        # to show employees per company
+        return ', '.join([p.full_name for p in obj.person.all()])
 
-admin.site.register(Company, Company_Admin)
+
+class Person_Admin(admin.ModelAdmin):
+    list_display = ('full_name', 'companies')
+
+    def companies(self, obj):
+        # to show list of companies per person
+        return ', '.join([c.company_name for c in obj.company_set.all()])
+
+
+admin.site.register(Company, CompanyAdmin)
+admin.site.register(Person, Person_Admin)
+admin.site.register(CompanyMembership)

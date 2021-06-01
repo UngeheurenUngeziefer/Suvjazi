@@ -25,3 +25,6 @@
 ## nice view for Person and Company in admin panel and console also
 ## tests 100% coverage
 ## PROJECT_DIR added
+## improve models -> create through class for m-t-m relationship
+## start recreating population script
+## impove admin -> good looking admin panel as prev ver
