@@ -3,9 +3,9 @@ from suvjazi_app.models import Person, Company, CompanyMembership
 
 
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ('company_name', 'company_url', 'employees')
+    list_display = ('company_name', 'company_url', 'all_time_employees')
 
-    def employees(self, obj):
+    def all_time_employees(self, obj):
         # to show employees per company
         return ', '.join([p.full_name for p in obj.person.all()])
 

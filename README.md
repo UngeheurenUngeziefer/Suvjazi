@@ -14,10 +14,10 @@
 ## about html added
 ## models for Person and Company created with m-to-m relations
 ## superuser created, models added to admin panel
-## script for populating db created (outdated)
+## script for populating db created ver1 (outdated)
 ## models switched, manyToMany fields logic understandable now
 ## switched populating script
-## populating script updated, worked fine
+## populating script updated ver2, work fine
 ## Company field url renamed to company_url
 ## Company objects all fields in admin panel
 ## Person objects all fields in admin panel
@@ -26,5 +26,8 @@
 ## tests 100% coverage
 ## PROJECT_DIR added
 ## improve models -> create through class for m-t-m relationship
-## start recreating population script
+## start updating population script
 ## impove admin -> good looking admin panel as prev ver
+## population script updated ver3, work fine (faker added)
+## tests updated 100% coverage
+## tests updated with fake generator
