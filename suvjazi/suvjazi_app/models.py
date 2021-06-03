@@ -1,10 +1,43 @@
 from django.db import models
+from django.template.defaultfilters import slugify
 
 
 class Person(models.Model):
     # model for humans
     first_name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=128)
+    slug = models.SlugField()
+
+    def slug_same_name_resolver(self, correct_slug, counter):
+        '''resolve same full_name of Person's conflicts 
+           by adding number after name in slug'''
+
+        if len(Person.objects.filter(slug=correct_slug)) == 0:
+            if counter == 0:
+                self.slug = correct_slug
+                print('Slug successfully added!')
+            else:
+                self.slug = correct_slug
+                print('Person have namesake in db. ' +
+                      f'{counter} added to the end of slug!')
+
+        elif len(Person.objects.filter(slug=correct_slug)) == 1:
+            if counter == 0:
+                counter += 1
+                correct_slug = correct_slug + '-' + str(counter)
+                self.slug_same_name_resolver(correct_slug, counter)
+            else:
+                counter += 1
+                correct_slug = correct_slug[:-1]
+                correct_slug = correct_slug + '-' + str(counter)
+                self.slug_same_name_resolver(correct_slug, counter)
+
+    def save(self, *args, **kwargs):
+        # creates slug link for every Person object
+        correct_slug = f'{self.first_name.lower()}-{self.last_name.lower()}'
+        counter = 0
+        self.slug_same_name_resolver(correct_slug, counter)
+        super(Person, self).save(*args, **kwargs)
 
     @property
     def full_name(self):
@@ -45,3 +78,5 @@ class CompanyMembership(models.Model):
     def __str__(self):
         # method to show connections between Person and Company in admin panel
         return self.person.full_name + ' - ' + self.company.company_name
+
+

@@ -1,5 +1,3 @@
-# from suvjazi.settings import PROJECT_DIR
-from django import test
 from django.test import TestCase
 from suvjazi_app.models import Company, Person, CompanyMembership
 from django.contrib.staticfiles import finders
@@ -8,7 +6,8 @@ from populate_db_ver3 import add_person, add_company, date_generator
 from faker import Faker
 fake = Faker()
 
-# some tests need to be reviewed or removed
+# review contain image test
+# add hook for autotests after push
 
 class GeneralTests(TestCase):
         
@@ -17,10 +16,12 @@ class GeneralTests(TestCase):
         result = finders.find('images/test_logo.png')
         self.assertIsNotNone(result)
 
-    def test_about_contain_image(self):
-        # check if is there an image on the about page
-        response = self.client.get(reverse('about'))
-        self.assertIn(b'img src="/media/', response.content)
+    # def test_about_contain_image(self):
+    #     # check if is there an image on the about page
+    #     response = self.client.get(reverse('about'))
+    #     result = finders.find('media/cat.jpg')
+    #     self.assertIn(result, response.content)
+        
 
 
 class IndexPageTests(TestCase):
@@ -59,21 +60,15 @@ class AboutPageTests(TestCase):
 
 class SuvjaziAppPageTests(TestCase):
     # tests for SuvjaziApp app
+
     def test_suvjazi_app_contains_word_suvjzai(self):
-        # check if there is the word 'suvjazi' on index page
+        # check if there is the word 'suvjazi app' on suvjazi_app page
         response = self.client.get(reverse('suvjazi_app'))
-        self.assertIn(b'Suvjazi app', response.content)
+        self.assertIn(b'Suvjazi App', response.content)
 
 
 class CompanyModelTests(TestCase):
     # tests for Company object
-
-    def test_url_are_starts_with_http(self):
-        # ensures company url starts with http
-        test_company = Company(company_name=fake.company(), 
-                               company_url=fake.url())
-        test_company.save()
-        self.assertEqual((test_company.company_url[:4] == 'http'), True)
 
     def test_company_str(self):
         # checks if company_name returned in admin panel
@@ -84,15 +79,6 @@ class CompanyModelTests(TestCase):
 
 class PersonModelTests(TestCase):
     # tests for Person object
-
-    # def test_name_without_numbers(self):
-    #     # checks if there numbers in first_name
-    #     test_person = Person(first_name='Alex', last_name='Test')
-    #     test_person.save()
-    #     numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
-    #     for i in numbers:
-    #         self.assertNotIn(i, test_person.first_name, 'Number in first_name')
-    #         self.assertNotIn(i, test_person.last_name, 'Number in last_name')
 
     def test_persons_full_name(self):
         # checks if full_name created or not

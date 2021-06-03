@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Suvjazi App</title>
+    </head>
+    <body>
+        <h1>Suvjazi says...</h1>
+        <div>hey there partner!</div>
+        <div>
+            {% if persons %}
+            <ul>
+            {% for person in persons %}
+            <li>{{ person.full_name }}</li>
+            {% endfor %}
+            </ul>
+            {% else %}
+            <strong>There are no persons for now. Let's create them!</strong>
+            {% endif %}
+        </div>
+        <div>
+            <a href='{% url "about" %}'>About Suvjazi app</a><br />
+            <img src='{% static "images/test_logo.png" %}' alt="Test logo" />
+        </div>
+    </body>
+</html>

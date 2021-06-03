@@ -13,10 +13,10 @@
             <strong>{{ message }}</strong><br />
         </div>
         <div>
-            <a href="/">Index</a><br />
-            <img src="{% static 'images/test_logo.png' %}"
+            <a href='{% url "index" %}'>Index</a><br />
+            <img src='{% static "images/test_logo.png" %}'
                  alt='Logo picture' />
-            <img src="{{ MEDIA_URL }}cat.jpg">
+            <img src='{{ MEDIA_URL }}cat.jpg'>
         </div>
     </body>
 </html>

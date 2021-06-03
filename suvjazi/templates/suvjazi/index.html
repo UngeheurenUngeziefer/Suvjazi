@@ -13,9 +13,9 @@
             <strong>{{ boldmessage }}</strong><br />
         </div>
         <div>
-            <a href="about">About</a><br />
-            <img src="{% static 'images/test_logo.png' %}"
-                 alt='Logo picture' />
+            <a href='{% url "suvjazi_app" %}'>Suvjazi App</a><br />
+            <a href='{% url "about" %}'>About</a><br />
+            <img src='{% static "images/test_logo.png" %}' alt='Logo picture' />
         </div>
     </body>
 </html>

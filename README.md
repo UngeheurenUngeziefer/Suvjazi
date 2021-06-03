@@ -31,3 +31,6 @@
 ## population script updated ver3, work fine (faker added)
 ## tests updated 100% coverage
 ## tests updated with fake generator
+## tests cleared & updated
+## slug added to Person obj
+## slug name resolver added for namesakes
