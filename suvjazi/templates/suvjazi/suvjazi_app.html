@@ -9,13 +9,15 @@
         <div>hey there partner!</div>
         <div>
             {% if persons %}
-            <ul>
-            {% for person in persons %}
-            <li>{{ person.full_name }}</li>
-            {% endfor %}
-            </ul>
+                <ul>
+                {% for person in persons %}
+                <li>
+                <a href='/suvjazi_app/{{ person.slug }}'>{{ person.full_name }}</a>
+                </li>
+                {% endfor %}
+                </ul>
             {% else %}
-            <strong>There are no persons for now. Let's create them!</strong>
+                <strong>There are no persons for now. Let's create them!</strong>
             {% endif %}
         </div>
         <div>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Suvjazi App</title>
+    </head>
+    <body>
+        <div>
+            {% if person %}
+                <h1>{{ person.full_name }}</h1>
+                {% if person_companies %}
+                    <ul>
+                    {% for company in person_companies %}
+                        <li><a href="{{ company.company_url }}">{{ company.company_name }}</a></li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <strong>No companies for this person.</strong>
+                {% endif %}
+            {% else %}
+                The specified person does not exist!
+            {% endif %}
+        </div>
+    </body>
+</html>

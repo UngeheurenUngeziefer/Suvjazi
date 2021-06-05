@@ -6,8 +6,8 @@ from populate_db_ver3 import add_person, add_company, date_generator
 from faker import Faker
 fake = Faker()
 
-# review contain image test
 # add hook for autotests after push
+
 
 class GeneralTests(TestCase):
         
@@ -15,14 +15,7 @@ class GeneralTests(TestCase):
         # test proper using of static files
         result = finders.find('images/test_logo.png')
         self.assertIsNotNone(result)
-
-    # def test_about_contain_image(self):
-    #     # check if is there an image on the about page
-    #     response = self.client.get(reverse('about'))
-    #     result = finders.find('media/cat.jpg')
-    #     self.assertIn(result, response.content)
         
-
 
 class IndexPageTests(TestCase):
     # tests for Index page
@@ -80,23 +73,53 @@ class CompanyModelTests(TestCase):
 class PersonModelTests(TestCase):
     # tests for Person object
 
-    def test_persons_full_name(self):
-        # checks if full_name created or not
+    def create_fake_person(self):
         full_name = fake.name()
         first_name = full_name.split()[0]
         last_name = full_name.split()[1]
         test_person = Person(first_name=first_name, last_name=last_name)
-        test_person.save()
+        return test_person, full_name
+
+    def test_persons_full_name(self):
+        # checks if full_name created or not
+        test_person, full_name = self.create_fake_person()
         self.assertEqual(test_person.full_name, full_name)
 
     def test_persons_str(self):
         # checks if full_name returned in admin panel
+        test_person, full_name = self.create_fake_person()
+        self.assertEqual(test_person.__str__(), full_name)
+
+    def test_slug_name_resolver(self):
+        # tests how same name persons resolver works
         full_name = fake.name()
         first_name = full_name.split()[0]
         last_name = full_name.split()[1]
-        test_person = Person(first_name=first_name, last_name=last_name)
-        test_person.save()
-        self.assertEqual(test_person.__str__(), full_name)
+        test_person = \
+            Person.objects.create(first_name=first_name, last_name=last_name)
+        same_name_person1 = \
+            Person.objects.create(first_name=first_name, last_name=last_name)
+        same_name_person2 = \
+            Person.objects.create(first_name=first_name, last_name=last_name)
+        same_name_person3 = \
+            Person.objects.create(first_name=first_name, last_name=last_name)
+        same_name_person4 = \
+            Person.objects.create(first_name=first_name, last_name=last_name)
+        same_name_person5 = \
+            Person.objects.create(first_name=first_name, last_name=last_name)
+        
+        self.assertEqual(test_person.slug,
+                        str(first_name + '-' + last_name).lower())
+        self.assertEqual(same_name_person1.slug, 
+                        str(first_name + '-' + last_name + '-' + '1').lower())
+        self.assertEqual(same_name_person2.slug, 
+                        str(first_name + '-' + last_name + '-' + '2').lower())
+        self.assertEqual(same_name_person3.slug, 
+                        str(first_name + '-' + last_name + '-' + '3').lower())
+        self.assertEqual(same_name_person4.slug, 
+                        str(first_name + '-' + last_name + '-' + '4').lower())
+        self.assertEqual(same_name_person5.slug, 
+                        str(first_name + '-' + last_name + '-' + '5').lower())    
 
 
 class CompanyMembershipTests(TestCase):

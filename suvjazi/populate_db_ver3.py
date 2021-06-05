@@ -1,3 +1,5 @@
+# script populate django app db with random info
+
 import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'suvjazi.settings')
 import django
