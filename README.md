@@ -6,8 +6,9 @@ tasks & ideas:
     show statistic for progress log
 <br />
 <title>Progress log:</title>
+
 | folder/file | change/progress |
-| --- | --- |
+ --- | --- 
 | general | start reading Tango with Django |
 | general | high-level design for web app created |
 | general | start django project |
