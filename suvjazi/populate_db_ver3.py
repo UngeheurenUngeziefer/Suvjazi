@@ -3,15 +3,14 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'suvjazi.settings')
 import django
 django.setup()
 from suvjazi_app.models import Company, Person, CompanyMembership
-from suvjazi.settings import PROJECT_DIR
+# from suvjazi.settings import PROJECT_DIR
 from random import randint
 from faker import Faker
 fake = Faker()
 
-def populate_db():
-    
-    num_of_persons = 50
-    num_of_companies = 10
+
+def populate_db(num_of_persons, num_of_companies):
+    # function populating db with fake persons and companies
 
     # adding persons
     for i in range(num_of_persons):
@@ -53,7 +52,6 @@ def add_person(person_name):
     last_name = person_name.split()[1]
     person = Person.objects.get_or_create(first_name=first_name, 
                                           last_name=last_name)[0]
-    person.save()
     print(f'Person <{person_name}> created & saved')
     return person
 
@@ -62,7 +60,6 @@ def add_company(company_name, company_url):
     # company creation
     company = Company.objects.get_or_create(company_name=company_name,
                                             company_url=company_url)[0]
-    company.save()
     print(f'Company <{company_name}> created & saved')
     return company
 
@@ -82,4 +79,4 @@ def add_connection(person, company, date_joined, date_leaved):
 
 if __name__ == '__main__':
     print('Start populating DB...') # pragma: no cover
-    populate_db()                   # pragma: no cover
+    populate_db(50, 10)             # pragma: no cover

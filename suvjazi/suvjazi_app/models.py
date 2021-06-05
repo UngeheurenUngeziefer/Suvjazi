@@ -28,12 +28,12 @@ class Person(models.Model):
                 self.slug_same_name_resolver(correct_slug, counter)
             else:
                 counter += 1
-                correct_slug = correct_slug[:-1]
+                correct_slug = correct_slug[:-2]
                 correct_slug = correct_slug + '-' + str(counter)
                 self.slug_same_name_resolver(correct_slug, counter)
 
     def save(self, *args, **kwargs):
-        # creates slug link for every Person object
+        # creates slug link for every Person object & automaticly save obj
         correct_slug = f'{self.first_name.lower()}-{self.last_name.lower()}'
         counter = 0
         self.slug_same_name_resolver(correct_slug, counter)
@@ -54,6 +54,12 @@ class Company(models.Model):
     company_name = models.CharField(max_length=128, unique=True)
     company_url = models.URLField()
     person = models.ManyToManyField(Person, through='CompanyMembership')
+    slug = models.SlugField()
+
+    def save(self, *args, **kwargs):
+        # creates slug link for every Company object & automaticly save obj
+        self.slug = slugify(self.company_name)
+        super(Company, self).save(*args, **kwargs)
 
     class Meta:
         # to show correct plural in admin panel
@@ -78,5 +84,3 @@ class CompanyMembership(models.Model):
     def __str__(self):
         # method to show connections between Person and Company in admin panel
         return self.person.full_name + ' - ' + self.company.company_name
-
-

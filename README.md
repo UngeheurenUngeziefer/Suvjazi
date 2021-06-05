@@ -34,3 +34,8 @@
 ## tests cleared & updated
 ## slug added to Person obj
 ## slug name resolver added for namesakes
+## iteration on Person objs in suvjazi_app html page
+## populate_db_ver3.py: population script updated
+## admin.py: prepopulation of slug field logic added
+## models.py: slug corrected for more than 1, slug for Company obj created
+add table and filenames for all changes
