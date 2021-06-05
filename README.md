@@ -1,11 +1,11 @@
-tasks & ideas:
-    create db saver script ------------------------ OK
-    create table in readme ------------------------ OK
-    create script populating db from saved db
-    create hook for tests
-    show statistic for progress log
+tasks & ideas:<br />
+    create db saver script ------------------------ OK<br />
+    create table in readme ------------------------ OK<br />
+    create script populating db from saved db<br />
+    create hook for tests<br />
+    show statistic for progress log<br />
 <br />
-<title>Progress log:</title>
+### Progress log:
 
 | folder/file | change/progress |
  --- | --- 
