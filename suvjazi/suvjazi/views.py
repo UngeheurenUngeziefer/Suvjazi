@@ -7,11 +7,6 @@ def index(request):
     context_dict = {'boldmessage': 'Value of boldmessage!'}
     return render(request, 'suvjazi/index.html', context=context_dict)
 
-
 def about(request):
     context_dict = {'mesage': 'About page message!'}
     return render(request, 'suvjazi/about.html', context=context_dict)
-
-
-
-

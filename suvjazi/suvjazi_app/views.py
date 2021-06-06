@@ -3,6 +3,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from suvjazi_app.models import Person, Company, CompanyMembership
+from suvjazi_app.forms import PersonForm
+from suvjazi.views import index
 
 
 def suvjazi_app(request):
@@ -25,3 +27,17 @@ def show_persons(request, person_slug):
         context_dict['person_companies'] = None
     
     return render(request, 'suvjazi/person.html', context_dict)
+
+
+def add_person(request):
+    form = PersonForm()
+    if request.method == 'POST':
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return suvjazi_app(request)
+        else:
+            print(form.errors)
+    return render(request, 'suvjazi/add_person.html', {'form': form})
+
+

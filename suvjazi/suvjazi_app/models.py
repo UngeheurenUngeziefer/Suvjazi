@@ -34,7 +34,9 @@ class Person(models.Model):
 
     def save(self, *args, **kwargs):
         # creates slug link for every Person object & automaticly save obj
-        correct_slug = f'{self.first_name.lower()}-{self.last_name.lower()}'
+        self.first_name_slug = self.first_name.replace(' ', '-')
+        self.last_name_slug = self.last_name.replace(' ', '-')
+        correct_slug = f'{self.first_name_slug.lower()}-{self.last_name_slug.lower()}'
         counter = 0
         self.slug_same_name_resolver(correct_slug, counter)
         super(Person, self).save(*args, **kwargs)
@@ -52,7 +54,7 @@ class Person(models.Model):
 class Company(models.Model):
     # model for companies
     company_name = models.CharField(max_length=128, unique=True)
-    company_url = models.URLField()
+    company_url = models.URLField(max_length=200)
     person = models.ManyToManyField(Person, through='CompanyMembership')
     slug = models.SlugField()
 

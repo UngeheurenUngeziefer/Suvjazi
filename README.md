@@ -1,9 +1,12 @@
-tasks & ideas:<br />
-    create db saver script ------------------------ OK<br />
-    create table in readme ------------------------ OK<br />
-    create script populating db from saved db<br />
-    create hook for tests<br />
-    show statistic for progress log<br />
+### Tasks & Ideas:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;create db saver script ------------------------ OK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;create table in readme ------------------------ OK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;create script populating db from saved db ----- OK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;merge autoscripts & add multifunctional class<br />
+&nbsp;&nbsp;&nbsp;&nbsp;add separate folder in templates<br />
+&nbsp;&nbsp;&nbsp;&nbsp;create hook for tests<br />
+&nbsp;&nbsp;&nbsp;&nbsp;show statistic for progress log<br />
+&nbsp;&nbsp;&nbsp;&nbsp;space in last_name crush slug fix ------------- OK<br />
 <br />
 ### Progress log:
 
@@ -54,3 +57,9 @@ tasks & ideas:<br />
 | urls | new path to Person obj page |
 | views | view updated to show & iterate Person obj's |
 | html | person page added, persons are links in suvjazi_app page now |
+| automation scripts | population script now can upload info from saved JSON |
+| forms | form for Person obj creation added, work fine |
+| models | added fix for spaces in first or last name for slug |
+| urls | added url for add person |
+| views | view for add person |
+| html | page for person creation |
