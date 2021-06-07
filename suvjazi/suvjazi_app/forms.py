@@ -9,7 +9,7 @@ class PersonForm(forms.ModelForm):
                                 help_text='Please enter last name.')
 
     class Meta:
-        # Provide an association between the ModelForm and a model
+     # Provide an association between the ModelForm and a model
         model = Person
         fields = ('first_name', 'last_name')
         exclude = ('slug', )

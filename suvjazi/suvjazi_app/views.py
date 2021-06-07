@@ -15,7 +15,8 @@ def suvjazi_app(request):
     
     return render(request, 'suvjazi/suvjazi_app.html', context=context_dict)
 
-def show_persons(request, person_slug):
+
+def show_person(request, person_slug):
     context_dict = {}
     try:
         person = Person.objects.get(slug=person_slug)
@@ -41,3 +42,15 @@ def add_person(request):
     return render(request, 'suvjazi/add_person.html', {'form': form})
 
 
+def show_company(request, company_slug):
+    context_dict = {}
+    try:
+        company = Company.objects.get(slug=company_slug)
+        company_persons = Person.objects.filter(company=company)
+        context_dict['company_persons'] = company_persons
+        context_dict['company'] = company
+    except Company.DoesNotExist:
+        context_dict['company'] = None
+        context_dict['company_persons'] = None
+    
+    return render(request, 'suvjazi/company.html', context_dict)

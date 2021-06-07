@@ -2,11 +2,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;create db saver script ------------------------ OK<br />
 &nbsp;&nbsp;&nbsp;&nbsp;create table in readme ------------------------ OK<br />
 &nbsp;&nbsp;&nbsp;&nbsp;create script populating db from saved db ----- OK<br />
-&nbsp;&nbsp;&nbsp;&nbsp;merge autoscripts & add multifunctional class<br />
+&nbsp;&nbsp;&nbsp;&nbsp;space in last_name crush slug fix ------------- OK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;merge autoscripts & add multifunctional class - OK<br />
 &nbsp;&nbsp;&nbsp;&nbsp;add separate folder in templates<br />
 &nbsp;&nbsp;&nbsp;&nbsp;create hook for tests<br />
 &nbsp;&nbsp;&nbsp;&nbsp;show statistic for progress log<br />
-&nbsp;&nbsp;&nbsp;&nbsp;space in last_name crush slug fix ------------- OK<br />
 <br />
 ### Progress log:
 
@@ -63,3 +63,4 @@
 | urls | added url for add person |
 | views | view for add person |
 | html | page for person creation |
+| views | add Company same logic as for Person obj's |
