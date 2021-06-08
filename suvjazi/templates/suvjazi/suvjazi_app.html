@@ -5,36 +5,10 @@
         <title>Suvjazi App</title>
     </head>
     <body>
-        <h1>Persons List</h1>
         <div>hey there partner!</div>
-        <div>
-            {% if persons %}
-                <ul>
-                {% for person in persons %}
-                <li>
-                <a href='person/{{ person.slug }}'>{{ person.full_name }}</a>
-                </li>
-                {% endfor %}
-                </ul>
-            {% else %}
-                <strong>There are no persons for now. Let's create them!</strong>
-            {% endif %}
-        </div>
-        <h1>Companies List</h1>
-        <div>
-            {% if companies %}
-                <ul>
-                {% for company in companies %}
-                <li>
-                <a href='company/{{ company.slug }}'>{{ company.company_name }}</a>
-                </li>
-                {% endfor %}
-                </ul>
-            {% else %}
-                <strong>There are no companies for now. Let's create them!</strong>
-            {% endif %}
-        </div>
-
+        <a href='{% url "show_persons" %}'>My Persons</a><br />
+        <a href='{% url "show_companies" %}'>My Companies</a><br />
+        
         <div>
             <a href='{% url "about" %}'>About Suvjazi app</a><br />
             <img src='{% static "images/test_logo.png" %}' alt="Test logo" />

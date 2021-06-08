@@ -76,8 +76,8 @@ class CompanyMembership(models.Model):
     # class to connect Person and Company many-to-many relation
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    date_joined = models.DateField()
-    date_leaved = models.DateField()
+    date_joined = models.DateField(null=True)
+    date_leaved = models.DateField(null=True)
     job_functions_description = models.TextField(blank=True)
 
     class Meta:

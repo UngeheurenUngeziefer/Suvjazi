@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Suvjazi App</title>
+    </head>
+    <body>
+        <h1>Add a Company</h1>
+        <div>
+            <form id='company_form' method='post' action='{% url "add_company" %}'>
+                {% csrf_token %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                {% for field in form.visible_fields %}
+                    {{ field.errors }}
+                    {{ field.help_text }}
+                    {{ field }}
+                {% endfor %}
+                <input type='submit' name='submit' value='Create Company' />
+            </form>
+        </div>
+    </body>
+</html>

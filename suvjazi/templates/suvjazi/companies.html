@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <title>Suvjazi App</title>
+    </head>
+    <body>
+<h1>Companies List</h1>
+        <div>
+            {% if companies %}
+                <ul>
+                    {% for company in companies %}
+                    <li>
+                        <a href='{{ company.slug }}'>{{ company.company_name }}</a>
+                    </li>
+                    {% endfor %}
+                    <a href='{% url "add_company" %}'>+ Add a New Company</a><br />
+                </ul>
+            {% else %}
+                <strong>There are no companies for now. Let's create them!</strong>
+            {% endif %}
+        </div>
+        <div>
+            <a href='{% url "index" %}'>Index</a><br />
+            <a href='{% url "suvjazi_app" %}'>Suvjazi app</a><br />
+            <a href='{% url "about" %}'>About</a><br />
+        </div>
+    </body>
+</html>

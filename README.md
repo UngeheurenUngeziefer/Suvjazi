@@ -4,6 +4,10 @@
 &nbsp;&nbsp;&nbsp;&nbsp;create script populating db from saved db ----- OK<br />
 &nbsp;&nbsp;&nbsp;&nbsp;space in last_name crush slug fix ------------- OK<br />
 &nbsp;&nbsp;&nbsp;&nbsp;merge autoscripts & add multifunctional class - OK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;add new person to Suvjazi App page ------------ OK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;add new company ------------------------------- OK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;edit button ----------------------------------- OK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;add more fields to Person & Company obj's<br />
 &nbsp;&nbsp;&nbsp;&nbsp;add separate folder in templates<br />
 &nbsp;&nbsp;&nbsp;&nbsp;create hook for tests<br />
 &nbsp;&nbsp;&nbsp;&nbsp;show statistic for progress log<br />
@@ -64,3 +68,4 @@
 | views | view for add person |
 | html | page for person creation |
 | views | add Company same logic as for Person obj's |
+| urls | structure of website changed |
