@@ -5,21 +5,30 @@
         <title>Suvjazi App</title>
     </head>
     <body>
-<h1>Companies List</h1>
-        <div>
-            {% if companies %}
-                <ul>
-                    {% for company in companies %}
-                    <li>
-                        <a href='{{ company.slug }}'>{{ company.company_name }}</a>
-                    </li>
-                    {% endfor %}
-                    <a href='{% url "add_company" %}'>+ Add a New Company</a><br />
-                </ul>
-            {% else %}
-                <strong>There are no companies for now. Let's create them!</strong>
-            {% endif %}
-        </div>
+        <h1>Companies List</h1>
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        {% endif %}
+            <div>
+                {% if companies %}
+                    <ul>
+                        {% for company in companies %}
+                        <li>
+                            <a href='{{ company.slug }}'>{{ company.company_name }}</a>
+                            <a href='{% url "edit_company" slug=company.slug %}'>Edit</a>
+                            <a href='{% url "delete_company" slug=company.slug %}'>Delete</a>
+                        </li>
+                        {% endfor %}
+                        <a href='{% url "add_company" %}'>+ Add a New Company</a><br />
+                    </ul>
+                {% else %}
+                    <strong>There are no companies for now. Let's create them!</strong>
+                {% endif %}
+            </div>
         <div>
             <a href='{% url "index" %}'>Index</a><br />
             <a href='{% url "suvjazi_app" %}'>Suvjazi app</a><br />

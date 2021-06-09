@@ -1,5 +1,5 @@
 from django import forms
-from suvjazi_app.models import Person, Company
+from suvjazi_app.models import Person, Company, CompanyMembership
 
 
 class PersonForm(forms.ModelForm):
@@ -7,11 +7,16 @@ class PersonForm(forms.ModelForm):
                                  help_text='Please enter first name.')
     last_name = forms.CharField(max_length=128,
                                 help_text='Please enter last name.')
+    company = forms.ModelMultipleChoiceField(
+                        queryset=Company.objects.all(),
+                        widget=forms.CheckboxSelectMultiple,
+                        help_text='Add companies of this person')
+    date_joined = CompanyMembership.objects.filter(company_name=company.company_name)
 
     class Meta:
      # Provide an association between the ModelForm and a model
         model = Person
-        fields = ('first_name', 'last_name')
+        fields = ('first_name', 'last_name', 'company')
         exclude = ('slug', )
 
 

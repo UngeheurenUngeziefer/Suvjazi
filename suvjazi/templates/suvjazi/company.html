@@ -10,7 +10,7 @@
                 {% if company_persons %}
                     <ul>
                     {% for person in company_persons %}
-                        <li><a href='{% url "show_person" person_slug=person.slug %}'>{{ person.full_name }}</a></li>
+                        <li><a href='{% url "show_person" slug=person.slug %}'>{{ person.full_name }}</a></li>
                     {% endfor %}
                     </ul>
                 {% else %}

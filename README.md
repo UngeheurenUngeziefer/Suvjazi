@@ -7,6 +7,12 @@
 &nbsp;&nbsp;&nbsp;&nbsp;add new person to Suvjazi App page ------------ OK<br />
 &nbsp;&nbsp;&nbsp;&nbsp;add new company ------------------------------- OK<br />
 &nbsp;&nbsp;&nbsp;&nbsp;edit button ----------------------------------- OK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;delete button --------------------------------- OK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;successfully edited message ------------------- OK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;successfully deleted message ------------------ OK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;are you sure for delete ----------------------- OK<br />
+&nbsp;&nbsp;&nbsp;&nbsp;add companies when person creating<br />
+&nbsp;&nbsp;&nbsp;&nbsp;add dates for companies when person creating<br />
 &nbsp;&nbsp;&nbsp;&nbsp;add more fields to Person & Company obj's<br />
 &nbsp;&nbsp;&nbsp;&nbsp;add separate folder in templates<br />
 &nbsp;&nbsp;&nbsp;&nbsp;create hook for tests<br />
@@ -69,3 +75,7 @@
 | html | page for person creation |
 | views | add Company same logic as for Person obj's |
 | urls | structure of website changed |
+| models| models connected more precisely |
+| urls | new urls for Company & Person CRUD |
+| views | views for Company & Person CRUD |
+| html | html's for obj's CRUD|

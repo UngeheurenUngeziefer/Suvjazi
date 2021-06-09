@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% block body %}
+<html>
+    <head>
+        <title>Suvjazi App</title>
+    </head>
+    <body>
+        <h1>Are you sure you want to delete {{ company.company_name }}?</h1>
+        <div>
+            <form method='POST'>
+                <form action="{% url 'delete_company' company.slug %}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete company">
+                </form>
+            </form>
+        </div>
+    </body>
+{% endblock %}
+</html>

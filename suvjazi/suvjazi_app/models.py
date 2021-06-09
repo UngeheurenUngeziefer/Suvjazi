@@ -6,6 +6,8 @@ class Person(models.Model):
     # model for humans
     first_name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=128)
+    company = models.ManyToManyField('Company', through='CompanyMembership', 
+                                               related_name='persons_companies')
     slug = models.SlugField()
 
     def slug_same_name_resolver(self, correct_slug, counter):
@@ -55,7 +57,8 @@ class Company(models.Model):
     # model for companies
     company_name = models.CharField(max_length=128, unique=True)
     company_url = models.URLField(max_length=200)
-    person = models.ManyToManyField(Person, through='CompanyMembership')
+    person = models.ManyToManyField('Person', through='CompanyMembership',
+                                              related_name='companies_persons')
     slug = models.SlugField()
 
     def save(self, *args, **kwargs):
@@ -86,3 +89,5 @@ class CompanyMembership(models.Model):
     def __str__(self):
         # method to show connections between Person and Company in admin panel
         return self.person.full_name + ' - ' + self.company.company_name
+
+
