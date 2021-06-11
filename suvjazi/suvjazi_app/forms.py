@@ -4,17 +4,14 @@ from suvjazi_app.models import Person, Company, CompanyMembership
 
 class PersonForm(forms.ModelForm):
     first_name = forms.CharField(max_length=128,
-                                 help_text='Please enter first name.')
+                                 help_text='First name.')
     last_name = forms.CharField(max_length=128,
-                                help_text='Please enter last name.')
-    company = forms.ModelMultipleChoiceField(
-                        queryset=Company.objects.all(),
-                        widget=forms.CheckboxSelectMultiple,
-                        help_text='Add companies of this person')
-    date_joined = CompanyMembership.objects.filter(company_name=company.company_name)
+                                help_text='Last name.')
+    company = forms.ModelMultipleChoiceField(help_text='Company',
+                                             queryset=Company.objects.all())
 
     class Meta:
-     # Provide an association between the ModelForm and a model
+    # Provide an association between the ModelForm and a model
         model = Person
         fields = ('first_name', 'last_name', 'company')
         exclude = ('slug', )
@@ -23,7 +20,7 @@ class PersonForm(forms.ModelForm):
 class CompanyForm(forms.ModelForm):
     company_name = forms.CharField(
                         max_length=128, 
-                        help_text="Please enter the company name.")
+                        help_text='Company name.')
     company_url = forms.URLField(
                         max_length=200,
                         required=False, 

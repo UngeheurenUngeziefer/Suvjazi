@@ -29,19 +29,24 @@ class DjangoDbManager():
         if option == 'fill_from_db':
             file = open('django_db.json')
             django_db_json = json.load(file)
-            
+            num_of_persons = 0
+            num_of_companies = 0
+            num_of_connections = 0
+
             for i in range(len(django_db_json['persons_fields']['first_name'])):
                 # add persons
                 first_name = django_db_json['persons_fields']['first_name'][i]
                 last_name = django_db_json['persons_fields']['last_name'][i]
                 full_name = first_name + ' ' + last_name
                 self.add_person(full_name)
+                num_of_persons += 1
 
             for i in range(len(django_db_json['company_fields']['company_name'])):
                 # add companies
                 company_name = django_db_json['company_fields']['company_name'][i]
                 company_url = django_db_json['company_fields']['company_url'][i]
                 self.add_company(company_name, company_url)
+                num_of_companies += 1
             
             for i in range(len(django_db_json['company_membership_fields']
                                                                 ['person_slug'])):
@@ -55,9 +60,13 @@ class DjangoDbManager():
                 date_joined = datetime.strptime(datj, '%Y-%m-%d')
                 date_leaved = datetime.strptime(datl, '%Y-%m-%d')
                 self.add_connection(person, company, date_joined, date_leaved)
+                num_of_connections += 1
 
             file.close()
             print('Info uploaded from django_db.json file!')
+            print(f'Added {num_of_persons} new persons ' + \
+                  f'& {num_of_companies} new companies ' + \
+                  f'& {num_of_connections} connections between them.')
 
         elif option == 'fill_with_fakes':
             # adding persons
@@ -180,4 +189,4 @@ class DjangoDbManager():
 
 
 # options for manager: fill_from_db, fill_with_fakes n1 n2, save_db, purge_db
-# obj = DjangoDbManager(option)
+obj = DjangoDbManager('fill_from_db')
