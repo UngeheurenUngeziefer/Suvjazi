@@ -17,7 +17,7 @@ class Person_Admin(admin.ModelAdmin):
 
     def companies(self, obj):
         # to show list of companies per person
-        return ', '.join([c.company_name for c in obj.company_set.all()])
+        return ', '.join([c.company_name for c in obj.company.all()])
 
 
 admin.site.register(Company, CompanyAdmin)

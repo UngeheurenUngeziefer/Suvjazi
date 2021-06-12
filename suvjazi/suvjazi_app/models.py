@@ -81,10 +81,11 @@ class CompanyMembership(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     date_joined = models.DateField(null=True)
     date_leaved = models.DateField(null=True)
-    job_functions_description = models.TextField(blank=True)
+    job_functions_description = models.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'CompanyMemberships'
+        unique_together = [['person', 'company']]
 
     def __str__(self):
         # method to show connections between Person and Company in admin panel

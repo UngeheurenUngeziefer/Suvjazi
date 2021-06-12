@@ -27,6 +27,7 @@
                 </ul>
             {% else %}
                 <strong>There are no persons for now. Let's create them!</strong>
+                <a href='{% url "add_person" %}'>+ Add a New Person</a><br />
             {% endif %}
         </div>
         <div>

@@ -44,6 +44,9 @@ def add_person(request):
     return render(request, 'suvjazi/add_person.html', {'form': form})
 
 
+
+
+
 def edit_person(request, slug):
     person = get_object_or_404(Person, slug=slug)
     form = PersonForm()
