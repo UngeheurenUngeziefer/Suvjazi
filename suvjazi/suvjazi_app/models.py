@@ -8,6 +8,7 @@ class Person(models.Model):
     last_name = models.CharField(max_length=128)
     company = models.ManyToManyField('Company', through='CompanyMembership', 
                                                related_name='persons_companies')
+                                                   
     slug = models.SlugField()
 
     def slug_same_name_resolver(self, correct_slug, counter):

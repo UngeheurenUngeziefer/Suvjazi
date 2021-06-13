@@ -1,11 +1,13 @@
 '''Suvjazi_app Views'''
 
+from django.forms.models import inlineformset_factory
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from suvjazi_app.models import Person, Company, CompanyMembership
 from suvjazi_app.forms import PersonForm, CompanyForm
 from suvjazi.views import index
 from django.contrib import messages
+from django.forms import modelformset_factory
 
 
 def suvjazi_app(request):
@@ -34,17 +36,18 @@ def show_person(request, slug):
 
 def add_person(request):
     form = PersonForm()
+    form_company_factory = inlineformset_factory(Person, CompanyMembership, form=CompanyForm, extra=3)
+    form_company = form_company_factory()
     if request.method == 'POST':
         form = PersonForm(request.POST)
-        if form.is_valid():
-            form.save(commit=True)
+        if form.is_valid() and form_company.is_valid():
+            person = form.save()
+            form_company.instance = person
+            form_company.save()
             return show_persons(request)
         else:
             print(form.errors)
-    return render(request, 'suvjazi/add_person.html', {'form': form})
-
-
-
+    return render(request, 'suvjazi/add_person.html', {'form': form, 'form_company': form_company})
 
 
 def edit_person(request, slug):

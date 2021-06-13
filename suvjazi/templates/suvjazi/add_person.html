@@ -17,6 +17,11 @@
                     {{ field.help_text }}
                     {{ field }}
                 {% endfor %}
+                <br/>
+                {{ form_company.management_form  }}
+                {% for fc in form_company %}
+                {{ fc }}
+                {% endfor %}
                 <input type='submit' name='submit' value='Create Person' />
             </form>
         </div>
