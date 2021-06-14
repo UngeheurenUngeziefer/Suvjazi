@@ -1,29 +1,43 @@
-<!DOCTYPE html>
+{% extends 'suvjazi/base.html' %}
 {% load static %}
-<html>
-    <head>
-        <title>Suvjazi App</title>
-    </head>
-    <body>
-        <h1>Add a Person</h1>
-        <div>
-            <form id='person_form' method='post' action='{% url "add_person" %}'>
-                {% csrf_token %}
-                {% for hidden in form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
-                {% for field in form.visible_fields %}
-                    {{ field.errors }}
-                    {{ field.help_text }}
-                    {{ field }}
-                {% endfor %}
-                <br/>
-                {{ form_company.management_form  }}
-                {% for fc in form_company %}
-                {{ fc }}
-                {% endfor %}
-                <input type='submit' name='submit' value='Create Person' />
-            </form>
+
+{% block content %}
+
+<h1>Add a Person</h1>
+<div>
+    <form id='person_form' method='post' action={% url 'add_person' %}>
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+        {% for field in form.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text }}
+            {{ field }}
+        {% endfor %}
+        <br/>
+        {{ form_company.management_form  }}
+        {% for fc in form_company %}
+        <div class="inlineform">
+            {{ fc }}
+            <br/>
         </div>
-    </body>
-</html>
+        {% endfor %}
+        <input type='submit' name='submit' value='Create Person' />
+        <a href={% url 'show_persons' %}>Cancel</a>
+    </form>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script type="text/javascript">
+    $(function() {
+        $('.inlineform').formset({
+            prefix: '{{ form_company.prefix }}',
+            addText: '+ Add new company',
+            deleteText: '- Remove this company',
+        });
+    })
+</script>
+{% endblock scripts %}

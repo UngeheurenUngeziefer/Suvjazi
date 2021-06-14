@@ -78,4 +78,6 @@
 | models| models connected more precisely |
 | urls | new urls for Company & Person CRUD |
 | views | views for Company & Person CRUD |
-| html | html's for obj's CRUD|
+| html | html's for obj's CRUD |
+| html | html's base added, updated |
+| js | js added for inline forms and + & - buttons |

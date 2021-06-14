@@ -1,28 +1,23 @@
-<!DOCTYPE html>
-{% block body %}
-<html>
-    <head>
-        <title>Suvjazi App</title>
-    </head>
-    <body>
-        <h1>Edit a Person</h1>
+{% extends 'suvjazi/base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Edit a Person</h1>
+<div>
+    <form method='POST'>
+        <br />
+        {% csrf_token %}
+
+        {% for field in form %}
         <div>
-            <form method='POST'>
-                <br />
-                {% csrf_token %}
-
-                {% for field in form %}
-                <div>
-                    <label for='id_{{ field.name }}'>{{ field.label }}</label>
-                    <div>
-                        {{ field }}
-                    </div>
-                </div>
-                {% endfor %}
-
-                <button type='submit'>Save Person</button>
-            </form>
+            <label for='id_{{ field.name }}'>{{ field.label }}</label>
+            <div>
+                {{ field }}
+            </div>
         </div>
-    </body>
-{% endblock %}
-</html>
+        {% endfor %}
+
+        <button type='submit'>Save Person</button>
+    </form>
+</div>
+{% endblock content %}

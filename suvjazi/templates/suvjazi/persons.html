@@ -1,39 +1,30 @@
-<!DOCTYPE html>
+{% extends 'suvjazi/base.html' %}
 {% load static %}
-<html>
-    <head>
-        <title>Suvjazi App</title>
-    </head>
-    <body>
-        <h1>Persons List</h1>
-            {% if messages %}
-            <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+
+{% block content %}
+<h1>Persons List</h1>
+    {% if messages %}
+    <ul class='messages'>
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+<div>
+    {% if persons %}
+        <ul>
+            {% for person in persons %}
+            <li>
+                <a href='{{ person.slug }}'>{{ person.full_name }}</a>
+                <a href={% url 'edit_person' slug=person.slug %}>Edit</a>
+                <a href={% url 'delete_person' slug=person.slug %}>Delete</a>
+            </li>
             {% endfor %}
-            </ul>
-            {% endif %}
-        <div>
-            {% if persons %}
-                <ul>
-                    {% for person in persons %}
-                    <li>
-                        <a href='{{ person.slug }}'>{{ person.full_name }}</a>
-                        <a href='{% url "edit_person" slug=person.slug %}'>Edit</a>
-                        <a href='{% url "delete_person" slug=person.slug %}'>Delete</a>
-                    </li>
-                    {% endfor %}
-                    <a href='{% url "add_person" %}'>+ Add a New Person</a><br />
-                </ul>
-            {% else %}
-                <strong>There are no persons for now. Let's create them!</strong>
-                <a href='{% url "add_person" %}'>+ Add a New Person</a><br />
-            {% endif %}
-        </div>
-        <div>
-            <a href='{% url "index" %}'>Index</a><br />
-            <a href='{% url "suvjazi_app" %}'>Suvjazi app</a><br />
-            <a href='{% url "about" %}'>About</a><br />
-        </div>
-    </body>
-</html>
+            <a href={% url 'add_person' %}>+ Add a New Person</a><br />
+        </ul>
+    {% else %}
+        <strong>There are no persons for now. Let's create them!</strong>
+        <a href={% url 'add_person' %}>+ Add a New Person</a><br />
+    {% endif %}
+</div>
+{% endblock content %}

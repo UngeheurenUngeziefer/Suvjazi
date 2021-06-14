@@ -1,24 +1,19 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Suvjazi App</title>
-    </head>
-    <body>
-        <div>
-            {% if company %}
-                <h1>{{ company.company_name }}</h1>
-                {% if company_persons %}
-                    <ul>
-                    {% for person in company_persons %}
-                        <li><a href='{% url "show_person" slug=person.slug %}'>{{ person.full_name }}</a></li>
-                    {% endfor %}
-                    </ul>
-                {% else %}
-                    <strong>No employees were added to this company.</strong>
-                {% endif %}
-            {% else %}
-                The specified company does not exist!
-            {% endif %}
-        </div>
-    </body>
-</html>
+{% extends 'suvjazi/base.html' %}
+{% load static %}
+
+{% block content %}
+{% if company %}
+    <h1>{{ company.company_name }}</h1>
+    {% if company_persons %}
+        <ul>
+        {% for person in company_persons %}
+            <li><a href={% url 'show_person' slug=person.slug %}>{{ person.full_name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <strong>No employees were added to this company.</strong>
+    {% endif %}
+{% else %}
+    The specified company does not exist!
+{% endif %}
+{% endblock content %}

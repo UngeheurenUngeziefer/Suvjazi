@@ -7,7 +7,7 @@ class Person(models.Model):
     first_name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=128)
     company = models.ManyToManyField('Company', through='CompanyMembership', 
-                                               related_name='persons_companies')
+                                               related_name='companies')
                                                    
     slug = models.SlugField()
 
@@ -59,7 +59,7 @@ class Company(models.Model):
     company_name = models.CharField(max_length=128, unique=True)
     company_url = models.URLField(max_length=200)
     person = models.ManyToManyField('Person', through='CompanyMembership',
-                                              related_name='companies_persons')
+                                              related_name='persons')
     slug = models.SlugField()
 
     def save(self, *args, **kwargs):

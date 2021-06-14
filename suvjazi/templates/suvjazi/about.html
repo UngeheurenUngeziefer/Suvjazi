@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-
+{% extends 'suvjazi/base.html' %}
 {% load static %}
 
+{% block content %}
 <html>
     <head>
         <title>Suvjazi</title>
@@ -13,10 +13,11 @@
             <strong>{{ message }}</strong><br />
         </div>
         <div>
-            <a href='{% url "index" %}'>Index</a><br />
-            <img src='{% static "images/test_logo.png" %}'
+            <a href={% url 'index' %}>Index</a><br />
+            <img src={% static 'images/test_logo.png' %}
                  alt='Logo picture' />
             <img src='{{ MEDIA_URL }}cat.jpg'>
         </div>
     </body>
 </html>
+{% endblock content %}

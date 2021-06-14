@@ -1,17 +1,13 @@
-<!DOCTYPE html>
+{% extends 'suvjazi/base.html' %}
 {% load static %}
-<html>
-    <head>
-        <title>Suvjazi App</title>
-    </head>
-    <body>
-        <div>hey there partner!</div>
-        <a href='{% url "show_persons" %}'>My Persons</a><br />
-        <a href='{% url "show_companies" %}'>My Companies</a><br />
-        
-        <div>
-            <a href='{% url "about" %}'>About Suvjazi app</a><br />
-            <img src='{% static "images/test_logo.png" %}' alt="Test logo" />
-        </div>
-    </body>
-</html>
+
+{% block content %}
+<div>hey there partner!</div>
+<a href={% url 'show_persons' %}>My Persons</a><br />
+<a href={% url 'show_companies' %}>My Companies</a><br />
+
+<div>
+    <a href={% url 'about' %}>About Suvjazi app</a><br />
+    <img src={% static 'images/test_logo.png' %} alt='Test logo' />
+</div>
+{% endblock content %}

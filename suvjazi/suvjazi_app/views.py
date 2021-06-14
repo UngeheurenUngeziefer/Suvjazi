@@ -4,10 +4,11 @@ from django.forms.models import inlineformset_factory
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from suvjazi_app.models import Person, Company, CompanyMembership
-from suvjazi_app.forms import PersonForm, CompanyForm
+from suvjazi_app.forms import PersonForm, CompanyForm, CompanyMembershipForm
 from suvjazi.views import index
 from django.contrib import messages
 from django.forms import modelformset_factory
+from django.urls import reverse
 
 
 def suvjazi_app(request):
@@ -15,39 +16,56 @@ def suvjazi_app(request):
 
 
 def show_persons(request):
-    persons_list = Person.objects.order_by('last_name')
-    context_dist = {'persons': persons_list}
-    return render(request, 'suvjazi/persons.html', context=context_dist)
+    if request.method == "GET":
+        persons_list = Person.objects.order_by('last_name')
+        context = {'persons': persons_list}
+        return render(request, 'suvjazi/persons.html', context=context)
 
 
 def show_person(request, slug):
-    context_dict = {}
     try:
         person = Person.objects.get(slug=slug)
         person_companies = Company.objects.filter(person=person)
-        context_dict['person_companies'] = person_companies
-        context_dict['person'] = person
+        company_memberships = CompanyMembership.objects.filter(person=person)
+        context = {
+            'person_companies': person_companies,
+            'person': person,
+            'company_memberships': company_memberships
+            }
     except Person.DoesNotExist:
-        context_dict['person'] = None
-        context_dict['person_companies'] = None
-    
-    return render(request, 'suvjazi/person.html', context_dict)
+        context = {
+            'person_companies': person_companies,
+            'person': person
+            }
+    return render(request, 'suvjazi/person.html', context)
 
 
 def add_person(request):
-    form = PersonForm()
-    form_company_factory = inlineformset_factory(Person, CompanyMembership, form=CompanyForm, extra=3)
-    form_company = form_company_factory()
-    if request.method == 'POST':
+    if request.method == 'GET':
+        form = PersonForm()
+        form_company_factory = inlineformset_factory(Person, Company.person.through, form=CompanyMembershipForm, extra=1)
+        form_company = form_company_factory()
+        context = {
+            'form': form,
+            'form_company': form_company
+        }
+        return render(request, 'suvjazi/add_person.html', context)
+    elif request.method == 'POST':
         form = PersonForm(request.POST)
+        form_company_factory = inlineformset_factory(Person, Company.person.through, form=CompanyMembershipForm)
+        form_company = form_company_factory(request.POST)
         if form.is_valid() and form_company.is_valid():
             person = form.save()
             form_company.instance = person
             form_company.save()
-            return show_persons(request)
+            return redirect(reverse('show_persons'))
         else:
+            context = {
+            'form': form,
+            'form_company': form_company
+            }    
             print(form.errors)
-    return render(request, 'suvjazi/add_person.html', {'form': form, 'form_company': form_company})
+            return render(request, 'suvjazi/add_person.html', context)
 
 
 def edit_person(request, slug):
