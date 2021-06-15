@@ -16,7 +16,6 @@ class PersonForm(forms.ModelForm):
 
 
 class CompanyForm(forms.ModelForm):
-
     company_name = forms.CharField(
                     max_length=100,
                     widget=forms.TextInput(attrs={

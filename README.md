@@ -1,22 +1,26 @@
 ### Tasks & Ideas:<br />
-&nbsp;&nbsp;&nbsp;&nbsp;create db saver script ------------------------ OK<br />
-&nbsp;&nbsp;&nbsp;&nbsp;create table in readme ------------------------ OK<br />
-&nbsp;&nbsp;&nbsp;&nbsp;create script populating db from saved db ----- OK<br />
-&nbsp;&nbsp;&nbsp;&nbsp;space in last_name crush slug fix ------------- OK<br />
-&nbsp;&nbsp;&nbsp;&nbsp;merge autoscripts & add multifunctional class - OK<br />
-&nbsp;&nbsp;&nbsp;&nbsp;add new person to Suvjazi App page ------------ OK<br />
-&nbsp;&nbsp;&nbsp;&nbsp;add new company ------------------------------- OK<br />
-&nbsp;&nbsp;&nbsp;&nbsp;edit button ----------------------------------- OK<br />
-&nbsp;&nbsp;&nbsp;&nbsp;delete button --------------------------------- OK<br />
-&nbsp;&nbsp;&nbsp;&nbsp;successfully edited message ------------------- OK<br />
-&nbsp;&nbsp;&nbsp;&nbsp;successfully deleted message ------------------ OK<br />
-&nbsp;&nbsp;&nbsp;&nbsp;are you sure for delete ----------------------- OK<br />
-&nbsp;&nbsp;&nbsp;&nbsp;add companies when person creating<br />
-&nbsp;&nbsp;&nbsp;&nbsp;add dates for companies when person creating<br />
-&nbsp;&nbsp;&nbsp;&nbsp;add more fields to Person & Company obj's<br />
-&nbsp;&nbsp;&nbsp;&nbsp;add separate folder in templates<br />
-&nbsp;&nbsp;&nbsp;&nbsp;create hook for tests<br />
-&nbsp;&nbsp;&nbsp;&nbsp;show statistic for progress log<br />
+- [x] create db saver script
+- [x] create table in readme
+- [x] create script populating db from saved db 
+- [x] space in last_name crush slug fix 
+- [x] merge autoscripts & add multifunctional class
+- [x] add new person to Suvjazi App page 
+- [x] add new company 
+- [x] edit button 
+- [x] delete button 
+- [x] successfully edited message 
+- [x] successfully deleted message 
+- [x] are you sure for delete 
+- [x] select companies when person creating 
+- [x] add dates for companies when person creating 
+- [x] recreate this as a table or progress list
+- [x] draw sitemap
+- [ ] bind searchbox with companies
+- [ ] add new companies when person creating
+- [ ] add more fields to Person & Company obj's
+- [ ] add separate folder in templates
+- [ ] create hook for tests
+- [ ] show statistic for progress log
 <br />
 ### Progress log:
 
@@ -81,3 +85,6 @@
 | html | html's for obj's CRUD |
 | html | html's base added, updated |
 | js | js added for inline forms and + & - buttons |
+| forms | added CompanyMembership form |
+| models | one argument name corrected |
+| views | updated view add person & many companies only with select from existing for now |

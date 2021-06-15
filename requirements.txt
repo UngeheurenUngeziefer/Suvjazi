@@ -1,2 +1,2 @@
-Faker==8.4.0
 Django==3.2.3
+Faker==8.4.0
