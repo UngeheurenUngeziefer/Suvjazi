@@ -15,8 +15,11 @@
 - [x] add dates for companies when person creating 
 - [x] recreate this as a table or progress list
 - [x] draw sitemap
+- [x] create plan
 - [ ] bind searchbox with companies
 - [ ] add new companies when person creating
+- [ ] CompanyMembership add nice admin panel view
+- [ ] edit person page update
 - [ ] add more fields to Person & Company obj's
 - [ ] add separate folder in templates
 - [ ] create hook for tests

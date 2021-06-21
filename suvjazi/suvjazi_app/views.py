@@ -50,6 +50,7 @@ def add_person(request):
             'form_company': form_company
         }
         return render(request, 'suvjazi/add_person.html', context)
+        
     elif request.method == 'POST':
         form = PersonForm(request.POST)
         form_company_factory = inlineformset_factory(Person, Company.person.through, form=CompanyMembershipForm)

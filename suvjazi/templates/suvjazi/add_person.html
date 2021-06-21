@@ -24,34 +24,6 @@
         </div>
         {% endfor %}
 
-        <div class="wrapper">
-            <form class="searchbox">
-              <input type="search" placeholder="Search" id="search" autocomplete="off">
-              <div id="search-autocomplete" class="search-autocomplete">
-                <ul>
-                
-                  <li class="load-more"><a href="#">Load more</a></li>
-                  <li class="no-results">No results.</li>
-                  <li class="error">%err%</li>
-                </ul>
-                <div class="loader">
-                  <div class="spinner">
-                    <div class="bounce1"></div>
-                    <div class="bounce2"></div>
-                    <div class="bounce3"></div>
-                  </div>
-                </div>
-              </div>
-            </form>
-        </div>
-          
-        <p class="description">
-            Start by typing in the search box to search Google
-        </p>
-
-
-
-
         <input type='submit' name='submit' value='Create Person' />
         <a href={% url 'show_persons' %}>Cancel</a>
     </form>
