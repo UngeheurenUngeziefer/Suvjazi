@@ -16,8 +16,9 @@
 - [x] recreate this as a table or progress list
 - [x] draw sitemap
 - [x] create plan
-- [ ] bind searchbox with companies
-- [ ] add new companies when person creating
+- [x] add new companies when person creating (RelatedFieldWidgetWrapper)
+- [ ] fix reverse popup plus button
+- [ ] custom form/html for add new company button
 - [ ] CompanyMembership add nice admin panel view
 - [ ] edit person page update
 - [ ] add more fields to Person & Company obj's

@@ -1,3 +1,4 @@
+from suvjazi_app.forms import CompanyMembershipForm
 from django.contrib import admin
 from suvjazi_app.models import Person, Company, CompanyMembership
 
@@ -13,7 +14,7 @@ class CompanyAdmin(admin.ModelAdmin):
         return ', '.join([p.full_name for p in obj.person.all()])
 
 
-class Person_Admin(admin.ModelAdmin):
+class PersonAdmin(admin.ModelAdmin):
     list_display = ('full_name', 'slug', 'companies')
     prepopulated_fields = {'slug':('first_name', 'last_name')}
 
@@ -22,6 +23,7 @@ class Person_Admin(admin.ModelAdmin):
         return ', '.join([c.company_name for c in obj.company.all()])
 
 
+   
 admin.site.register(Company, CompanyAdmin)
-admin.site.register(Person, Person_Admin)
+admin.site.register(Person, PersonAdmin)
 admin.site.register(CompanyMembership)

@@ -1,5 +1,7 @@
 from django import forms
 from suvjazi_app.models import Person, Company, CompanyMembership
+from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
+from django.contrib.admin import site as admin_site
 
 
 class PersonForm(forms.ModelForm):
@@ -59,7 +61,22 @@ class CompanyMembershipForm(forms.ModelForm):
     date_joined = forms.DateField()
     date_leaved = forms.DateField()
     job_functions_description = forms.Textarea()
+    
+    
+
+    def __init__(self, *args, **kwargs):
+        super(CompanyMembershipForm, self).__init__(*args, **kwargs)
+      
+        self.fields['company'].widget = (
+           RelatedFieldWidgetWrapper( 
+               self.fields['company'].widget,
+               self.instance._meta.get_field('company').remote_field,            
+               admin_site,
+           )
+       )
+
 
     class Meta:
         model   = CompanyMembership
         fields  = '__all__'
+
