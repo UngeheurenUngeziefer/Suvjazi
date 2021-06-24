@@ -2,6 +2,7 @@
 
 from django.urls import path
 from suvjazi_app import views
+from suvjazi_app.views import CompanyAutocomplete
 
 urlpatterns = [
     path('', views.suvjazi_app, name='suvjazi_app'),
@@ -18,6 +19,7 @@ urlpatterns = [
     path('companies/<slug:slug>', views.show_company, name='show_company'),
     path('companies/<slug:slug>/edit', views.edit_company, name='edit_company'),
     path('companies/<slug:slug>/delete', views.delete_company, 
-                                          name='delete_company')
-    
+                                          name='delete_company'),
+    path('company-autocomplete/', CompanyAutocomplete.as_view(), 
+                                    name='company-autocomplete')
 ]

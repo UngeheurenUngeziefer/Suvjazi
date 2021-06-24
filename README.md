@@ -17,6 +17,11 @@
 - [x] draw sitemap
 - [x] create plan
 - [x] add new companies when person creating (RelatedFieldWidgetWrapper)
+- [x] blank=True in url field in Company model
+- [x] django-autocomplete-light returned JSON
+- [ ] dal framework not visible for VSCode pylances
+- [ ] https://django-autocomplete-light.readthedocs.io/en/master/tutorial.html#overview
+- [ ] https://django-autocomplete-light.readthedocs.io/en/master/tutorial.html#creation-of-new-choices-in-the-autocomplete-form
 - [ ] fix reverse popup plus button
 - [ ] custom form/html for add new company button
 - [ ] CompanyMembership add nice admin panel view

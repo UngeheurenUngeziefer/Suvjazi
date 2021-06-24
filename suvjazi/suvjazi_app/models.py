@@ -57,7 +57,7 @@ class Person(models.Model):
 class Company(models.Model):
     # model for companies
     company_name = models.CharField(max_length=128, unique=True)
-    company_url = models.URLField(max_length=200)
+    company_url = models.URLField(max_length=200, blank=True)
     person = models.ManyToManyField('Person', through='CompanyMembership',
                                               related_name='persons')
     slug = models.SlugField()

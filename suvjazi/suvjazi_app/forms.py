@@ -2,6 +2,7 @@ from django import forms
 from suvjazi_app.models import Person, Company, CompanyMembership
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.contrib.admin import site as admin_site
+from dal import autocomplete
 
 
 class PersonForm(forms.ModelForm):
@@ -57,13 +58,23 @@ class CompanyMembershipForm(forms.ModelForm):
                         required=False)
     company = forms.ModelChoiceField(
                     queryset=Company.objects.all().order_by('company_name'),
+                    widget=autocomplete.ModelSelect2(
+                        url='company-autocomplete', 
+                        attrs={'data-placeholder': 'Type company name to find'}
+                        ),
                     required=False)
+
+    class Meta:
+        model = Person
+        fields = ('__all__')
+
+
+
     date_joined = forms.DateField()
     date_leaved = forms.DateField()
     job_functions_description = forms.Textarea()
     
     
-
     def __init__(self, *args, **kwargs):
         super(CompanyMembershipForm, self).__init__(*args, **kwargs)
       
