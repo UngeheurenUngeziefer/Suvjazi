@@ -58,17 +58,11 @@ class CompanyMembershipForm(forms.ModelForm):
                         required=False)
     company = forms.ModelChoiceField(
                     queryset=Company.objects.all().order_by('company_name'),
-                    widget=autocomplete.ModelSelect2(
-                        url='company-autocomplete', 
-                        attrs={'data-placeholder': 'Type company name to find'}
-                        ),
                     required=False)
 
     class Meta:
         model = Person
         fields = ('__all__')
-
-
 
     date_joined = forms.DateField()
     date_leaved = forms.DateField()
