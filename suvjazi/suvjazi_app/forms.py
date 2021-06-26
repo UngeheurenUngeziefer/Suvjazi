@@ -2,7 +2,6 @@ from django import forms
 from suvjazi_app.models import Person, Company, CompanyMembership
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.contrib.admin import site as admin_site
-from dal import autocomplete
 
 
 class PersonForm(forms.ModelForm):

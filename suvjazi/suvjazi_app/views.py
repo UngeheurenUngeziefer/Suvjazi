@@ -9,7 +9,13 @@ from suvjazi.views import index
 from django.contrib import messages
 from django.forms import modelformset_factory
 from django.urls import reverse
+
+
 from dal import autocomplete
+import json
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
+
 
 
 
@@ -36,8 +42,7 @@ def show_person(request, slug):
             }
     except Person.DoesNotExist:
         context = {
-            'person_companies': person_companies,
-            'person': person
+            
             }
     return render(request, 'suvjazi/person.html', context)
 
@@ -69,17 +74,6 @@ def add_person(request):
             }    
             print(form.errors)
             return render(request, 'suvjazi/add_person.html', context)
-
-
-class CompanyAutocomplete(autocomplete.Select2QuerySetView):
-    def get_queryset(self):
-        
-        query_set = Company.objects.all()
-
-        if self.q:
-            query_set = query_set.filter(name__istartswith=self.q)
-
-        return query_set
 
 
 def edit_person(request, slug):
@@ -171,3 +165,17 @@ def delete_company(request, slug):
         return redirect('show_companies')
 
     return render(request, 'suvjazi/delete_company.html', {'company': company})
+
+
+def add_person2(request):
+    form = PersonForm(instance=Person.objects.first())
+    if request.is_ajax():
+        term = request.GET.get('term')
+        companies = Company.objects.all().filter(company_name__icontains=term)
+        return JsonResponse(list(companies.values()), safe=False)
+    if request.method == 'POST':
+        form = CompanyForm(request.POST, instance=Company.objects.first())
+        if form.is_valid():
+            form.save()
+            return redirect('add_person2')
+    return render(request, 'suvjazi/add_person2.html', {'form': form})

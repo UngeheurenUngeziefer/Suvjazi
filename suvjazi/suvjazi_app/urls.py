@@ -2,7 +2,9 @@
 
 from django.urls import path
 from suvjazi_app import views
-from suvjazi_app.views import CompanyAutocomplete
+
+from django.urls import include, path
+
 
 urlpatterns = [
     path('', views.suvjazi_app, name='suvjazi_app'),
@@ -20,6 +22,5 @@ urlpatterns = [
     path('companies/<slug:slug>/edit', views.edit_company, name='edit_company'),
     path('companies/<slug:slug>/delete', views.delete_company, 
                                           name='delete_company'),
-    path('company-autocomplete/', CompanyAutocomplete.as_view(), 
-                                    name='company-autocomplete')
+    path('add_person2', views.add_person2, name='add_person2'),
 ]
