@@ -1,12 +1,14 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 
+from django.conf import settings
+from django.db import models
 
 class Person(models.Model):
     # model for humans
     first_name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=128)
-    company = models.ManyToManyField('Company', through='CompanyMembership', 
+    company = models.ManyToManyField(settings.AUTH_USER_MODEL, through='CompanyMembership', 
                                                related_name='companies')
                                                    
     slug = models.SlugField()
@@ -91,4 +93,13 @@ class CompanyMembership(models.Model):
     def __str__(self):
         # method to show connections between Person and Company in admin panel
         return self.person.full_name + ' - ' + self.company.company_name
+
+
+################################################################################
+from django.conf import settings
+from django.db import models
+
+class Book(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    co_authors = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='co_authored_by')
 

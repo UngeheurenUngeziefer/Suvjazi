@@ -5,6 +5,9 @@ from suvjazi_app import views
 
 from django.urls import include, path
 
+from django.urls import include, path
+from . import views
+
 
 urlpatterns = [
     path('', views.suvjazi_app, name='suvjazi_app'),
@@ -22,5 +25,9 @@ urlpatterns = [
     path('companies/<slug:slug>/edit', views.edit_company, name='edit_company'),
     path('companies/<slug:slug>/delete', views.delete_company, 
                                           name='delete_company'),
-    path('add_person2', views.add_person2, name='add_person2'),
+    
+################################################################################
+    # path just to include autocomplete form
+    path("select2/", include("django_select2.urls")),
+    path("book/create", views.BookCreateView.as_view(), name="book-create"),
 ]

@@ -167,15 +167,13 @@ def delete_company(request, slug):
     return render(request, 'suvjazi/delete_company.html', {'company': company})
 
 
-def add_person2(request):
-    form = PersonForm(instance=Person.objects.first())
-    if request.is_ajax():
-        term = request.GET.get('term')
-        companies = Company.objects.all().filter(company_name__icontains=term)
-        return JsonResponse(list(companies.values()), safe=False)
-    if request.method == 'POST':
-        form = CompanyForm(request.POST, instance=Company.objects.first())
-        if form.is_valid():
-            form.save()
-            return redirect('add_person2')
-    return render(request, 'suvjazi/add_person2.html', {'form': form})
+################################################################################
+from django.views import generic
+
+from . import forms, models
+
+
+class BookCreateView(generic.CreateView):
+    model = models.Book
+    form_class = forms.BookForm
+    success_url = "/"
