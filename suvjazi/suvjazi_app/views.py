@@ -11,24 +11,55 @@ from django.forms import modelformset_factory
 from django.urls import reverse
 
 
-from dal import autocomplete
-import json
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
-
+from django.views.generic import ListView
 
 
 def suvjazi_app(request):
     return render(request, 'suvjazi/suvjazi_app.html')
 
 
-def show_persons(request):
-    if request.method == "GET":
-        persons_list = Person.objects.order_by('last_name')
-        context = {'persons': persons_list}
-        return render(request, 'suvjazi/persons.html', context=context)
+class ShowEntities(ListView):
+    def __init__(self, model, template_name: str, sort_field: str, jinja_obj: str):
+        self.model = model
+        self.template_name = template_name
+        self.sort_field = sort_field
+        self.jinja_obj = jinja_obj
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        entities_list = self.model.objects.order_by(self.sort_field)
+        context[self.jinja_obj] = entities_list
+        return context
+
+class ShowPersons(ShowEntities):
+    def __init__(self):
+        self.model = Person
+        self.template_name = 'suvjazi/persons.html'
+        self.sort_field = 'last_name'
+        self.jinja_obj = 'persons'
+
+
+# class ShowPersons(ListView):
+#     model = Person
+#     template_name = 'suvjazi/persons.html'
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         persons_list = Person.objects.order_by('last_name')
+#         context['persons'] = persons_list
+#         return context
+
+class ShowCompanies(ListView):
+    model = Company
+    template_name = 'suvjazi/companies.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        companies_list = Company.objects.order_by('company_name')
+        context['companies'] = companies_list
+        return context
 
 def show_person(request, slug):
     try:
@@ -48,6 +79,7 @@ def show_person(request, slug):
 
 
 def add_person(request):
+    
     if request.method == 'GET':
         form = PersonForm()
         form_company_factory = inlineformset_factory(Person, Company.person.through, form=CompanyMembershipForm, extra=1)
@@ -105,11 +137,6 @@ def delete_person(request, slug):
     return render(request, 'suvjazi/delete_person.html', {'person': person})
 
 
-def show_companies(request):
-    companies_list = Company.objects.order_by('company_name')
-    context_dict = {'companies': companies_list}
-    
-    return render(request, 'suvjazi/companies.html', context=context_dict)
 
 
 def show_company(request, slug):
@@ -165,15 +192,3 @@ def delete_company(request, slug):
         return redirect('show_companies')
 
     return render(request, 'suvjazi/delete_company.html', {'company': company})
-
-
-################################################################################
-from django.views import generic
-
-from . import forms, models
-
-
-class BookCreateView(generic.CreateView):
-    model = models.Book
-    form_class = forms.BookForm
-    success_url = "/"

@@ -1,19 +1,9 @@
 from django import forms
+from django.forms.widgets import Widget
 from suvjazi_app.models import Person, Company, CompanyMembership
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.contrib.admin import site as admin_site
 
-
-from django import forms
-from django_select2 import forms as s2forms
-
-from . import models
-
-
-class CompanyWidget(s2forms.ModelSelect2Widget):
-    search_fields = [
-        "company_name__icontains"
-    ]
 
 class PersonForm(forms.ModelForm):
     first_name = forms.CharField(max_length=128,
@@ -26,10 +16,8 @@ class PersonForm(forms.ModelForm):
         model   = Person
         fields  = ('first_name', 'last_name')
         exclude = ('slug', )
-
+        
     
-
-
 class CompanyForm(forms.ModelForm):
     company_name = forms.CharField(
                     max_length=100,
@@ -68,49 +56,16 @@ class CompanyMembershipForm(forms.ModelForm):
                         widget=forms.CheckboxSelectMultiple,
                         help_text='Add existing persons from this company',
                         required=False)
-    # company = forms.ModelChoiceField(
-    #                 queryset=Company.objects.all().order_by('company_name'),
-    #                 required=False)
+    company = forms.ModelChoiceField(
+                    queryset=Company.objects.all().order_by('company_name'),
+                    required=False,
+                    )
+    
     date_joined = forms.DateField()
     date_leaved = forms.DateField()
     job_functions_description = forms.Textarea()
-
+    
     class Meta:
         model   = CompanyMembership
         fields  = '__all__'
-        widgets = {
-            "company": CompanyWidget,
-        }
-
- 
-
-
-###############################################################################
-from django import forms
-from django_select2 import forms as s2forms
-
-from . import models
-
-
-class AuthorWidget(s2forms.ModelSelect2Widget):
-    search_fields = [
-        "username__icontains",
-        "email__icontains",
-    ]
-
-
-class CoAuthorsWidget(s2forms.ModelSelect2MultipleWidget):
-    search_fields = [
-        "username__icontains",
-        "email__icontains",
-    ]
-
-
-class BookForm(forms.ModelForm):
-    class Meta:
-        model = models.Book
-        fields = "__all__"
-        widgets = {
-            "author": AuthorWidget,
-            "co_authors": CoAuthorsWidget,
-        }
+       

@@ -19,10 +19,16 @@
 - [x] add new companies when person creating (RelatedFieldWidgetWrapper)
 - [x] blank=True in url field in Company model
 - [x] django-autocomplete-light returned JSON
+- [x] back to stable release
+- [ ] migrate from func-views to class-based-views
+
+
 - [ ] implement working models with autocomplete 
 - [ ] try to compare and find out the way to merge and implement
 - [ ] implement autocomplete company field in person creation page
 --------------------------------------------------------------------------------
+- [ ] for country field https://evileg.com/ru/post/608/ юзаем ChoiceField
+- [ ] check cyrillic slugs, add logic for cyrillic
 - [ ] realization of autocomplete in seperate tab
 - [ ] dal framework not visible for VSCode pylances
 - [ ] fix reverse popup plus button

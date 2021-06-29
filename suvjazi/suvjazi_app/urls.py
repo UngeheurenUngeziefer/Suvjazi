@@ -11,7 +11,7 @@ from . import views
 
 urlpatterns = [
     path('', views.suvjazi_app, name='suvjazi_app'),
-    path('persons/', views.show_persons, name='show_persons'),
+    path('persons/', views.ShowPersons.as_view(), name='show_persons'),
     path('persons/add_person', views.add_person, name='add_person'),
     path('persons/<slug:slug>', views.show_person, name='show_person'),
     path('persons/<slug:slug>/edit', views.edit_person, 
@@ -19,15 +19,11 @@ urlpatterns = [
     path('persons/<slug:slug>/delete', views.delete_person,
                                               name='delete_person'),
 
-    path('companies/', views.show_companies, name='show_companies'),
+    path('companies/', views.ShowCompanies.as_view(), name='show_companies'),
     path('companies/add_company', views.add_company, name='add_company'),
     path('companies/<slug:slug>', views.show_company, name='show_company'),
     path('companies/<slug:slug>/edit', views.edit_company, name='edit_company'),
     path('companies/<slug:slug>/delete', views.delete_company, 
                                           name='delete_company'),
     
-################################################################################
-    # path just to include autocomplete form
-    path("select2/", include("django_select2.urls")),
-    path("book/create", views.BookCreateView.as_view(), name="book-create"),
 ]
