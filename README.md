@@ -20,7 +20,18 @@
 - [x] blank=True in url field in Company model
 - [x] django-autocomplete-light returned JSON
 - [x] back to stable release
-- [ ] migrate from func-views to class-based-views
+- [ ] migrate from func-views to class-based-views:
+    - [x] view list of Persons
+    - [x] view list of Institutes
+    - [x] view one Person
+    - [x] view one Institute
+    - [x] add Person
+    - [x] add Institute
+    - [ ] edit Person
+    - [ ] edit Institute
+    - [ ] delete Person
+    - [ ] delete Institute
+    - [ ] new views mind map
 
 
 - [ ] implement working models with autocomplete 

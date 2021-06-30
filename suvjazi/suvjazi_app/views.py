@@ -3,6 +3,7 @@
 from django.forms.models import inlineformset_factory
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic.edit import CreateView
 from suvjazi_app.models import Person, Company, CompanyMembership
 from suvjazi_app.forms import PersonForm, CompanyForm, CompanyMembershipForm
 from suvjazi.views import index
@@ -10,18 +11,27 @@ from django.contrib import messages
 from django.forms import modelformset_factory
 from django.urls import reverse
 
-
 from django.shortcuts import render, redirect
 
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView, View
+from typing import Union, List
+from django.db.models import QuerySet
 
 
-def suvjazi_app(request):
-    return render(request, 'suvjazi/suvjazi_app.html')
+class SuvjaziApp(View):
+    # view for SuvjaziApp page
+    def get(self, request):
+        return render(request, 'suvjazi/suvjazi_app.html')
 
 
-class ShowEntities(ListView):
-    def __init__(self, model, template_name: str, sort_field: str, jinja_obj: str):
+class ListEntities(ListView):
+    # class for showing list of entities with sorting
+    def __init__(self,
+                 model: Union[Person, Company], 
+                 template_name: str, 
+                 sort_field: str, 
+                 jinja_obj: str):
+
         self.model = model
         self.template_name = template_name
         self.sort_field = sort_field
@@ -33,7 +43,8 @@ class ShowEntities(ListView):
         context[self.jinja_obj] = entities_list
         return context
 
-class ShowPersons(ShowEntities):
+
+class ListPersons(ListEntities):
     def __init__(self):
         self.model = Person
         self.template_name = 'suvjazi/persons.html'
@@ -41,46 +52,76 @@ class ShowPersons(ShowEntities):
         self.jinja_obj = 'persons'
 
 
-# class ShowPersons(ListView):
-#     model = Person
-#     template_name = 'suvjazi/persons.html'
+class ListCompanies(ListEntities):
+    # parent class to list entities
+    def __init__(self):
+        self.model = Company
+        self.template_name = 'suvjazi/companies.html'
+        self.sort_field = 'company_name'
+        self.jinja_obj = 'companies'
 
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         persons_list = Person.objects.order_by('last_name')
-#         context['persons'] = persons_list
-#         return context
 
-class ShowCompanies(ListView):
-    model = Company
-    template_name = 'suvjazi/companies.html'
+class ViewPerson(TemplateView):
+    # class for showing one Person from the list of
+    def __init__(self):
+        self.template_name = 'suvjazi/person.html'
 
-    def get_context_data(self, **kwargs):
+        
+    def get_context_data(self, slug, **kwargs):
         context = super().get_context_data(**kwargs)
-        companies_list = Company.objects.order_by('company_name')
-        context['companies'] = companies_list
+        try:
+            person = Person.objects.get(slug=slug)
+            person_companies = Company.objects.filter(person=person)
+            company_memberships = CompanyMembership.objects.filter(person=person)
+            context = {
+                'person_companies': person_companies,
+                'person': person,
+                'company_memberships': company_memberships
+                }
+        except Person.DoesNotExist:
+            context = {}
         return context
 
-def show_person(request, slug):
-    try:
-        person = Person.objects.get(slug=slug)
-        person_companies = Company.objects.filter(person=person)
-        company_memberships = CompanyMembership.objects.filter(person=person)
-        context = {
-            'person_companies': person_companies,
-            'person': person,
-            'company_memberships': company_memberships
+        
+class ViewInstitute(TemplateView):
+    # class for showing one Institute from the list
+    def __init__(self,
+                 model: Union[Company],
+                 template_name: str,
+                 entity_persons: Union[QuerySet, List[Person]]):
+        
+        self.model = model
+        self.template_name = template_name
+        self.entity_persons = entity_persons
+        
+
+    def get_context_data(self, slug, **kwargs):
+        context = super().get_context_data(**kwargs)
+        try:
+            entity_persons, entity = self.entity_persons_queryset(slug)
+            context = {
+                'entity_persons': entity_persons,
+                'entity': entity
             }
-    except Person.DoesNotExist:
-        context = {
-            
-            }
-    return render(request, 'suvjazi/person.html', context)
+        except self.model.DoesNotExist:
+            context = {}
+        return context
 
 
-def add_person(request):
-    
-    if request.method == 'GET':
+class ViewCompany(ViewInstitute):
+    def __init__(self):
+        self.model = Company
+        self.template_name = 'suvjazi/company.html'
+
+    def entity_persons_queryset(self, slug):
+        entity = self.model.objects.get(slug=slug)
+        entity_persons = Person.objects.filter(company=entity)
+        return entity_persons, entity
+
+
+class CreatePerson(CreateView):
+    # create person view
+    def get(self, request, *args, **kwargs):
         form = PersonForm()
         form_company_factory = inlineformset_factory(Person, Company.person.through, form=CompanyMembershipForm, extra=1)
         form_company = form_company_factory()
@@ -89,8 +130,8 @@ def add_person(request):
             'form_company': form_company
         }
         return render(request, 'suvjazi/add_person.html', context)
-        
-    elif request.method == 'POST':
+
+    def post(self, request, *args, **kwargs):
         form = PersonForm(request.POST)
         form_company_factory = inlineformset_factory(Person, Company.person.through, form=CompanyMembershipForm)
         form_company = form_company_factory(request.POST)
@@ -106,6 +147,39 @@ def add_person(request):
             }    
             print(form.errors)
             return render(request, 'suvjazi/add_person.html', context)
+
+
+class CreateInstitute(CreateView):
+    # parent view to create institute
+    # reformat for any institute
+
+    def get(self, request, *args, **kwargs):
+        form = CompanyForm()
+        return render(request, 'suvjazi/add_company.html', {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = CompanyForm(request.POST)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect('show_companies')
+        else:
+            print(form.errors)
+        return render(request, 'suvjazi/add_company.html', {'form': form})
+
+
+
+
+
+# def add_company(request):
+#     form = CompanyForm()
+#     if request.method == 'POST':
+#         form = CompanyForm(request.POST)
+#         if form.is_valid():
+#             form.save(commit=True)
+#             return show_companies(request)
+#         else:
+#             print(form.errors)
+#     return render(request, 'suvjazi/add_company.html', {'form': form})
 
 
 def edit_person(request, slug):
@@ -139,30 +213,7 @@ def delete_person(request, slug):
 
 
 
-def show_company(request, slug):
-    context_dict = {}
-    try:
-        company = Company.objects.get(slug=slug)
-        company_persons = Person.objects.filter(company=company)
-        context_dict['company_persons'] = company_persons
-        context_dict['company'] = company
-    except Company.DoesNotExist:
-        context_dict['company'] = None
-        context_dict['company_persons'] = None
-    
-    return render(request, 'suvjazi/company.html', context_dict)
 
-
-def add_company(request):
-    form = CompanyForm()
-    if request.method == 'POST':
-        form = CompanyForm(request.POST)
-        if form.is_valid():
-            form.save(commit=True)
-            return show_companies(request)
-        else:
-            print(form.errors)
-    return render(request, 'suvjazi/add_company.html', {'form': form})
 
 
 def edit_company(request, slug):

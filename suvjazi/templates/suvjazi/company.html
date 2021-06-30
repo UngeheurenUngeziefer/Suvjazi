@@ -2,11 +2,11 @@
 {% load static %}
 
 {% block content %}
-{% if company %}
-    <h1>{{ company.company_name }}</h1>
-    {% if company_persons %}
+{% if entity %}
+    <h1>{{ entity.company_name }}</h1>
+    {% if entity_persons %}
         <ul>
-        {% for person in company_persons %}
+        {% for person in entity_persons %}
             <li><a href={% url 'show_person' slug=person.slug %}>{{ person.full_name }}</a></li>
         {% endfor %}
         </ul>
