@@ -10,20 +10,20 @@ from . import views
 
 
 urlpatterns = [
-    path('', views.SuvjaziApp.as_view(), name='suvjazi_app'),
+    path('', views.ViewSuvjaziApp.as_view(), name='suvjazi_app'),
     path('persons/', views.ListPersons.as_view(), name='show_persons'),
     path('persons/add_person', views.CreatePerson.as_view(), name='add_person'),
     path('persons/<slug:slug>', views.ViewPerson.as_view(), name='show_person'),
-    path('persons/<slug:slug>/edit', views.edit_person, 
+    path('persons/<slug:slug>/edit', views.UpdatePerson.as_view(), 
                                             name='edit_person'),
-    path('persons/<slug:slug>/delete', views.delete_person,
+    path('persons/<slug:slug>/delete', views.DeletePerson.as_view(),
                                               name='delete_person'),
 
     path('companies/', views.ListCompanies.as_view(), name='show_companies'),
-    path('companies/add_company', views.CreateInstitute.as_view(), name='add_company'),
+    path('companies/add_company', views.CreateCompany.as_view(), name='add_company'),
     path('companies/<slug:slug>', views.ViewCompany.as_view(), name='show_company'),
-    path('companies/<slug:slug>/edit', views.edit_company, name='edit_company'),
-    path('companies/<slug:slug>/delete', views.delete_company, 
+    path('companies/<slug:slug>/edit', views.UpdateCompany.as_view(), name='edit_company'),
+    path('companies/<slug:slug>/delete', views.DeleteCompany.as_view(), 
                                           name='delete_company'),
     
 ]

@@ -14,11 +14,15 @@ from django.urls import reverse
 from django.shortcuts import render, redirect
 
 from django.views.generic import ListView, TemplateView, View
+from django.views.generic.edit import UpdateView, DeleteView
 from typing import Union, List
 from django.db.models import QuerySet
 
+from django.urls import reverse_lazy
 
-class SuvjaziApp(View):
+
+
+class ViewSuvjaziApp(View):
     # view for SuvjaziApp page
     def get(self, request):
         return render(request, 'suvjazi/suvjazi_app.html')
@@ -151,95 +155,124 @@ class CreatePerson(CreateView):
 
 class CreateInstitute(CreateView):
     # parent view to create institute
-    # reformat for any institute
 
     def get(self, request, *args, **kwargs):
-        form = CompanyForm()
-        return render(request, 'suvjazi/add_company.html', {'form': form})
+        return render(request, self.template_name, {'form': self.form})
+
+    def post_generalizer(self, request, *args, **kwargs):
+        if self.form.is_valid():
+            self.form.save(commit=True)
+            return redirect(self.redirect_path)
+        else:
+            print(self.form.errors)
+        return render(request, self.template_name, {'form': self.form})
+
+  
+class CreateCompany(CreateInstitute):
+    # company creation view
+
+    def __init__(self):
+        self.model = Company
+        self.template_name = 'suvjazi/add_company.html'
+        self.form = CompanyForm()
+        self.redirect_path = 'show_companies'
 
     def post(self, request, *args, **kwargs):
-        form = CompanyForm(request.POST)
-        if form.is_valid():
-            form.save(commit=True)
-            return redirect('show_companies')
-        else:
-            print(form.errors)
-        return render(request, 'suvjazi/add_company.html', {'form': form})
+        self.form = CompanyForm(request.POST)
+        return self.post_generalizer(self, request, *args, **kwargs)
+        
 
+class UpdatePerson(UpdateView):
+    model = Person
+    form_class = PersonForm
+    template_name = 'suvjazi/edit_person.html'
 
-
-
-
-# def add_company(request):
-#     form = CompanyForm()
-#     if request.method == 'POST':
-#         form = CompanyForm(request.POST)
-#         if form.is_valid():
-#             form.save(commit=True)
-#             return show_companies(request)
-#         else:
-#             print(form.errors)
-#     return render(request, 'suvjazi/add_company.html', {'form': form})
-
-
-def edit_person(request, slug):
-    person = get_object_or_404(Person, slug=slug)
-    form = PersonForm()
-
-    if request.method == 'POST':
+    def post(self, request, slug, *args, **kwargs):
+        person = get_object_or_404(Person, slug=slug)
         form = PersonForm(request.POST, instance=person)
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.INFO,
-                                    f'Changes saved.')
+            messages.add_message(request, messages.INFO, 'Changes saved.')
             return redirect('show_persons')
-    else:
-        form = PersonForm(instance=person)
-        print(form.errors)
-        return render(request, 'suvjazi/edit_person.html', {'form': form})
+        else:
+            form = PersonForm(instance=person)
+            print(form.errors)
+            return render(request, self.template_name, {'form': form})
 
 
-def delete_person(request, slug):
-    person = get_object_or_404(Person, slug=slug)
-    full_name = person.full_name
-    if request.method == 'POST':
-        person.delete()
-        messages.add_message(request, messages.INFO,
-                                    f'Person {full_name} successfully deleted.')
-        return redirect('show_persons')
+class UpdateInstitute(UpdateView):
 
-    return render(request, 'suvjazi/delete_person.html', {'person': person})
+    def __init__(self, model, form_class, template_name):
+        self.model = model
+        self.form_class = form_class
+        self.template_name = template_name
 
-
-
-
-
-
-
-def edit_company(request, slug):
-    company = get_object_or_404(Company, slug=slug)
-    form = CompanyForm()
-
-    if request.method == 'POST':
-        form = CompanyForm(request.POST, instance=company)
+    def post(self, request, slug, *args, **kwargs):
+        form = self.entity_edit_query_set(request, slug)
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.INFO,
-                                    f'Changes saved.')
-            return redirect('show_companies')
-    else:
-        form = CompanyForm(instance=company)
-        print(form.errors)
-        return render(request, 'suvjazi/edit_company.html', {'form': form})
+            messages.add_message(request, messages.INFO, 'Changes saved.')
+            return redirect(self.redirect_page)
+        else:
+            print(form.errors)
+            return render(request, self.template_name, {'form': form})
 
 
-def delete_company(request, slug):
-    company = get_object_or_404(Company, slug=slug)
-    company_name = company.company_name
-    if request.method == 'POST':
-        company.delete()
+class UpdateCompany(UpdateInstitute):
+
+    def __init__(self):
+        self.model = Company
+        self.form_class = CompanyForm
+        self.template_name = 'suvjazi/edit_company.html'
+        self.redirect_page = 'show_companies'
+
+
+    def entity_edit_query_set(self, request, slug):
+        company = get_object_or_404(Company, slug=slug)
+        form = CompanyForm(request.POST, instance=company)
+        return form
+    
+
+class DeleteEntity(DeleteView):
+    
+    def __init__(self, model, success_url, template_name):
+        self.model = model
+        self.success_url = success_url
+        self.template_name = template_name
+
+    def post(self, request, slug, *args, **kwargs):
+        entity, entity_str, entity_name  = self.delete_entity_query_set(slug)
+        entity.delete()
         messages.add_message(request, messages.INFO,
-                                f'Company {company_name} successfully deleted.')
-        return redirect('show_companies')
+                                    f'{entity_str} "{entity_name}" successfully deleted.')
+        return redirect(self.redirect_page)
 
-    return render(request, 'suvjazi/delete_company.html', {'company': company})
+
+class DeletePerson(DeleteEntity):
+    
+    def __init__(self):
+        self.model = Person
+        self.success_url = reverse_lazy('delete_person')
+        self.template_name = 'suvjazi/delete_person.html'
+        self.redirect_page = 'show_persons'
+
+    def delete_entity_query_set(self, slug):
+        person = get_object_or_404(Person, slug=slug)
+        entity_str = 'Person'
+        entity_name = person.full_name
+        return person, entity_str, entity_name
+
+
+class DeleteCompany(DeleteEntity):
+
+    def __init__(self):
+        self.model = Company
+        self.success_url = reverse_lazy('delete_company')
+        self.template_name = 'suvjazi/delete_company.html'
+        self.redirect_page = 'show_companies'
+
+    def delete_entity_query_set(self, slug):
+        company = get_object_or_404(Company, slug=slug)
+        entity_str = 'Company'
+        entity_name = company.company_name
+        return company, entity_str, entity_name

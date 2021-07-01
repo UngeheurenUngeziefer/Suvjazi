@@ -20,20 +20,25 @@
 - [x] blank=True in url field in Company model
 - [x] django-autocomplete-light returned JSON
 - [x] back to stable release
-- [ ] migrate from func-views to class-based-views:
-    - [x] view list of Persons
-    - [x] view list of Institutes
-    - [x] view one Person
-    - [x] view one Institute
-    - [x] add Person
-    - [x] add Institute
-    - [ ] edit Person
-    - [ ] edit Institute
-    - [ ] delete Person
-    - [ ] delete Institute
-    - [ ] new views mind map
-
-
+- [x] migrate from func-views to class-based-views:
+    - [x] view SuvjaziApp (independent)
+    - [x] view list of Entities (parent)
+    - [x] view list of Persons (child)
+    - [x] view list of Institutes (child)
+    - [x] view one Person (independent)
+    - [x] view one Institute (parent)
+    - [x] view one Company (child)
+    - [x] add Person (independent)
+    - [x] add Institute (parent)
+    - [x] add Company (child)
+    - [x] edit Person (independent)
+    - [x] edit Institute (parent)
+    - [x] edit Company (child)
+    - [x] delete Entity (parent)
+    - [x] delete Person (child)
+    - [x] delete Company (child)
+    - [x] new views miro mind map 
+--------------------------------------------------------------------------------
 - [ ] implement working models with autocomplete 
 - [ ] try to compare and find out the way to merge and implement
 - [ ] implement autocomplete company field in person creation page

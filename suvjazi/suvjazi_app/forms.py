@@ -50,6 +50,7 @@ class CompanyForm(forms.ModelForm):
         return cleaned_data
 
 
+
 class CompanyMembershipForm(forms.ModelForm):
     person = forms.ModelMultipleChoiceField(
                         queryset=Person.objects.all(),
