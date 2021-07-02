@@ -57,6 +57,8 @@
 - [ ] add separate folder in templates
 - [ ] create hook for tests
 - [ ] show statistic for progress log
+- [ ] rename stuff
+- [ ] frontend 
 <br />
 ### Progress log:
 
