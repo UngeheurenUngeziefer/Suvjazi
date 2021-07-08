@@ -38,10 +38,12 @@
     - [x] delete Person (child)
     - [x] delete Company (child)
     - [x] new views miro mind map 
---------------------------------------------------------------------------------
-- [ ] implement working models with autocomplete 
-- [ ] try to compare and find out the way to merge and implement
-- [ ] implement autocomplete company field in person creation page
+- [x] implement working models with autocomplete 
+- [x] try to compare and find out the way to merge and implement
+- [x] implement autocomplete company field in person creation page
+- [x] implement new form addition
+- [ ] resolve issue with second inactive form of new company (JS)
+- [ ] add new company if doesnt exist
 --------------------------------------------------------------------------------
 - [ ] for country field https://evileg.com/ru/post/608/ юзаем ChoiceField
 - [ ] check cyrillic slugs, add logic for cyrillic

@@ -20,6 +20,8 @@ from django.db.models import QuerySet
 
 from django.urls import reverse_lazy
 
+from django.http import JsonResponse
+
 
 
 class ViewSuvjaziApp(View):
@@ -129,6 +131,13 @@ class CreatePerson(CreateView):
         form = PersonForm()
         form_company_factory = inlineformset_factory(Person, Company.person.through, form=CompanyMembershipForm, extra=1)
         form_company = form_company_factory()
+        
+        # if request.is_ajax():
+        #     term = request.GET.get('term')
+        #     companies = Company.objects.all().filter(company_name__icontains=term)
+        #     return JsonResponse(list(companies.values()), safe=False)
+
+
         context = {
             'form': form,
             'form_company': form_company

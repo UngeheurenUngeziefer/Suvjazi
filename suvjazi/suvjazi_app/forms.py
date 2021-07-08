@@ -16,6 +16,7 @@ class PersonForm(forms.ModelForm):
         model   = Person
         fields  = ('first_name', 'last_name')
         exclude = ('slug', )
+    
         
     
 class CompanyForm(forms.ModelForm):
@@ -56,11 +57,11 @@ class CompanyMembershipForm(forms.ModelForm):
                         queryset=Person.objects.all(),
                         widget=forms.CheckboxSelectMultiple,
                         help_text='Add existing persons from this company',
-                        required=False)
-    company = forms.ModelChoiceField(
-                    queryset=Company.objects.all().order_by('company_name'),
-                    required=False,
-                    )
+                         required=False)
+    # company = forms.ModelChoiceField(
+    #                 queryset=Company.objects.all().order_by('company_name'),
+    #                 required=False,
+    #                 )
     
     date_joined = forms.DateField()
     date_leaved = forms.DateField()
@@ -68,5 +69,14 @@ class CompanyMembershipForm(forms.ModelForm):
     
     class Meta:
         model   = CompanyMembership
-        fields  = '__all__'
-       
+        fields  = ('person', 'date_joined', 'date_leaved', 'job_functions_description', 'company')
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['company'].queryset = Company.objects.all()
+
+        if 'company' in self.data:
+            self.fields['company'].queryset = Company.objects.all()
+
+        elif self.instance.pk:
+            self.fields['company'].queryset = Company.objects.all().filter(pk=self.instance.company.pk)

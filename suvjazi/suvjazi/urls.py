@@ -25,4 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('suvjazi_app/', include('suvjazi_app.urls')),
     path('about/', views.about, name='about')
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

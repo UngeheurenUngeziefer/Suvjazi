@@ -91,3 +91,4 @@ class CompanyMembership(models.Model):
     def __str__(self):
         # method to show connections between Person and Company in admin panel
         return self.person.full_name + ' - ' + self.company.company_name
+
