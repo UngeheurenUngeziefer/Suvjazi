@@ -35,7 +35,21 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#id_company').select2({
+            $('#id_1').select2({
+                ajax: {
+                    url: '{% url "add_person" %}',
+                    dataType: 'json',
+                    processResults: function (data) {
+                        return {
+                            results: $.map(data, function (item) {
+                                return {id: item.id, text: item.company_name};
+                            })
+                        };
+                    }
+                },
+                minimumInputLength: 1
+            });
+            $('#id_2').select2({
                 ajax: {
                     url: '{% url "add_person" %}',
                     dataType: 'json',
@@ -50,6 +64,8 @@
                 minimumInputLength: 1
             });
         });
+        
+        
     </script>
 </div>
 

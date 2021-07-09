@@ -132,10 +132,10 @@ class CreatePerson(CreateView):
         form_company_factory = inlineformset_factory(Person, Company.person.through, form=CompanyMembershipForm, extra=1)
         form_company = form_company_factory()
         
-        # if request.is_ajax():
-        #     term = request.GET.get('term')
-        #     companies = Company.objects.all().filter(company_name__icontains=term)
-        #     return JsonResponse(list(companies.values()), safe=False)
+        if request.is_ajax():
+            term = request.GET.get('term')
+            companies = Company.objects.all().filter(company_name__icontains=term)
+            return JsonResponse(list(companies.values()), safe=False)
 
 
         context = {

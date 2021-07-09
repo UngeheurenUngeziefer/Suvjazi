@@ -22,6 +22,14 @@
         {{ form_company.management_form }}
         {% for companymembership in form_company %}
             
+        <!-- {% for user in userlist %}
+            {{ user }} {{loop.counter}}
+            {% if loop.counter == 1 %}
+                This is the First user
+            {% endif %}
+        {% endfor %} -->
+
+
             <div class="inlineform">
                 Date joined:
                 {{ companymembership.date_joined }}
@@ -30,6 +38,7 @@
                 Job functions description:
                 {{ companymembership.job_functions_description }}
                 
+                {{loop.counter}}
                 Company:
                 <select class="js-example-basic-single" name="companymembership_set-0-company">
                 {% for company in companymembership.company %}
@@ -55,7 +64,7 @@
 
 <script>
     $(document).ready(function() {
-         $('.js-example-basic-single').select2();
+        $('.js-example-basic-single').select2();
     });
     
    
