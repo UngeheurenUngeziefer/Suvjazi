@@ -7,6 +7,7 @@
 
 <h1>Add a Person</h1>
 
+
 <div>
     <form id='person_form' method='post' action={% url 'add_person' %}> 
         {% csrf_token %}
@@ -19,18 +20,12 @@
             {{ field }}
         {% endfor %}
         <br/>
+        
+        <div class="inlineform">
         {{ form_company.management_form }}
         {% for companymembership in form_company %}
             
-        <!-- {% for user in userlist %}
-            {{ user }} {{loop.counter}}
-            {% if loop.counter == 1 %}
-                This is the First user
-            {% endif %}
-        {% endfor %} -->
 
-
-            <div class="inlineform">
                 Date joined:
                 {{ companymembership.date_joined }}
                 Date leaved:
@@ -38,18 +33,18 @@
                 Job functions description:
                 {{ companymembership.job_functions_description }}
                 
-                {{loop.counter}}
+
                 Company:
-                <select class="js-example-basic-single" name="companymembership_set-0-company">
+                <select class="js-example-basic-single" name="companymembership_set-__id__-company">
+                <!-- id="id_companymembership_set-{{ companymembership.id }}-company"> -->
                 {% for company in companymembership.company %}
                     {{ company }}
-
                 {% endfor %}
                 </select>
 
                     
                 <br/>
-            </div>
+         </div>
         {% endfor %}
 
 
@@ -57,14 +52,19 @@
         <a href={% url 'show_persons' %}>Cancel</a>
     </form>
 
+
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
         integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 
 
+
 <script>
     $(document).ready(function() {
         $('.js-example-basic-single').select2();
+        // $('#companymembership_set-0-company').select2();
+        
     });
     
    
@@ -72,14 +72,16 @@
 
 <script>
     $(function() {
+        
         $('.inlineform').formset({
             prefix: '{{ form_company.prefix }}',
             addText: '+ Add new company',
             deleteText: '- Remove this company',
         });
+
+        
     })
 </script>
-    
-    
+
 
 {% endblock content %}
