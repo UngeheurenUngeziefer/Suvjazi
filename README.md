@@ -43,7 +43,8 @@
 - [x] implement autocomplete company field in person creation page
 - [x] implement new form addition
 - [x] working test formset+autocomplete
-- [ ] implement working models to project
+- [x] implement working models to project
+- [x] change minimum input length
 - [ ] merge with required logic
 - [ ] resolve issue with second inactive form of new company (JS)
 - [ ] add new company if doesnt exist

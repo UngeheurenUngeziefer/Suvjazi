@@ -4,40 +4,27 @@
 {% block css %}{{ form.media.css }}{% endblock css %}
 
 {% block content %}
-<h1>Add a Person</h1>
+    <div>
+        <span>example 1</span>
+    </div>
 
+    <h1>Add a Person</h1>
 
-<div>
     <div id="formset-template" style="display: none;">
         {{ form.empty_form }}
     </div>
 
-    <form method='post' action={% url 'add_person' %}> 
+    <form method="post" action=".">
         {% csrf_token %}
-        {% for hidden in form.hidden_fields %}
-            {{ hidden }}
-        {% endfor %}
-        {% for field in form.visible_fields %}
-            {{ field.errors }}
-            {{ field.help_text }}
-            {{ field }}
-        {% endfor %}
-        <br/>
-        
-        <div class="formset">
-        {{ form_company.management_form }}
-        {% for companymembership in form_company %}
-                {{ companymembership }}
+        {{ form.management_form }}
 
-
-        {% endfor %}
-
-
-        <input type='submit' name='submit' value='Create Person' />
-        <a href={% url 'show_persons' %}>Cancel</a>
+        <div id="formset">
+            {% for f in form %}
+                {{ f }}
+            {% endfor %}
+        </div>
+        <button type="submit">submit</button>
     </form>
-
-
 
     <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="{% static 'jquery.formset.js' %}"></script>

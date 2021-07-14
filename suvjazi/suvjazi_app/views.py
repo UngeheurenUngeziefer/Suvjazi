@@ -23,6 +23,9 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse
 
 
+from django.views.generic import FormView
+from suvjazi_app.forms import BookFormset
+
 
 class ViewSuvjaziApp(View):
     # view for SuvjaziApp page
@@ -126,7 +129,8 @@ class ViewCompany(ViewInstitute):
 
 
 class CreatePerson(CreateView):
-    # create person view
+    form_class = CompanyMembershipForm
+
     def get(self, request, *args, **kwargs):
         form = PersonForm()
         form_company_factory = inlineformset_factory(Person, Company.person.through, form=CompanyMembershipForm, extra=1)
@@ -280,3 +284,13 @@ class DeleteCompany(DeleteEntity):
         entity_str = 'Company'
         entity_name = company.company_name
         return company, entity_str, entity_name
+
+
+
+
+
+class BookListView(FormView):
+    template_name = 'suvjazi/book-list.html'
+    form_class = BookFormset
+    # success_url = '/'
+

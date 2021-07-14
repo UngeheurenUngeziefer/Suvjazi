@@ -2,6 +2,7 @@ from suvjazi_app.forms import CompanyMembershipForm
 from django.contrib import admin
 from suvjazi_app.models import Person, Company, CompanyMembership
 
+from suvjazi_app.models import Book
 
 class CompanyAdmin(admin.ModelAdmin):
     list_display = ('company_name', 'slug', 'company_url', 'all_time_employees')
@@ -26,3 +27,4 @@ admin.site.register(Company, CompanyAdmin)
 admin.site.register(Person, PersonAdmin)
 admin.site.register(CompanyMembership)
 
+admin.site.register(Book)

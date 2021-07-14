@@ -7,7 +7,7 @@ from django.urls import include, path
 
 from django.urls import include, path
 from . import views
-
+from suvjazi_app.views import BookListView
 
 urlpatterns = [
     path('', views.ViewSuvjaziApp.as_view(), name='suvjazi_app'),
@@ -25,5 +25,7 @@ urlpatterns = [
     path('companies/<slug:slug>/edit', views.UpdateCompany.as_view(), name='edit_company'),
     path('companies/<slug:slug>/delete', views.DeleteCompany.as_view(), 
                                           name='delete_company'),
+
+    path('book', BookListView.as_view(), name='book-list-single'),
     
 ]

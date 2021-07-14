@@ -4,6 +4,8 @@ from suvjazi_app.models import Person, Company, CompanyMembership
 from django.contrib.admin.widgets import RelatedFieldWidgetWrapper
 from django.contrib.admin import site as admin_site
 
+from django_select2.forms import ModelSelect2Widget
+from suvjazi_app.models import Book
 
 class PersonForm(forms.ModelForm):
     first_name = forms.CharField(max_length=128,
@@ -51,6 +53,12 @@ class CompanyForm(forms.ModelForm):
         return cleaned_data
 
 
+class CompanyMembership2Widget(ModelSelect2Widget):
+    search_fields = [
+        'company__icontains',
+    ]
+
+
 
 class CompanyMembershipForm(forms.ModelForm):
     person = forms.ModelMultipleChoiceField(
@@ -58,10 +66,13 @@ class CompanyMembershipForm(forms.ModelForm):
                         widget=forms.CheckboxSelectMultiple,
                         help_text='Add existing persons from this company',
                          required=False)
-    # company = forms.ModelChoiceField(
-    #                 queryset=Company.objects.all().order_by('company_name'),
-    #                 required=False,
-    #                 )
+    company = forms.ModelChoiceField(
+                    queryset=Company.objects.all().order_by('company_name'),
+                    required=False,
+                    widget=CompanyMembership2Widget(
+                        attrs={'data-minimum-input-length': 1}
+                    ),
+                )
     
     date_joined = forms.DateField()
     date_leaved = forms.DateField()
@@ -71,12 +82,33 @@ class CompanyMembershipForm(forms.ModelForm):
         model   = CompanyMembership
         fields  = ('person', 'date_joined', 'date_leaved', 'job_functions_description', 'company')
         
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['company'].queryset = Company.objects.all()
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['company'].queryset = Company.objects.all()
 
-        if 'company' in self.data:
-            self.fields['company'].queryset = Company.objects.all()
+    #     if 'company' in self.data:
+    #         self.fields['company'].queryset = Company.objects.all()
 
-        elif self.instance.pk:
-            self.fields['company'].queryset = Company.objects.all().filter(pk=self.instance.company.pk)
+    #     elif self.instance.pk:
+    #         self.fields['company'].queryset = Company.objects.all().filter(pk=self.instance.company.pk)
+
+CompanyMembershipFormset = forms.formset_factory(CompanyMembershipForm)
+
+
+
+
+class BookSelect2Widget(ModelSelect2Widget):
+    search_fields = [
+        'title__icontains',
+    ]
+
+
+class BooksForm(forms.Form):
+    book = forms.ModelChoiceField(
+        queryset=Book.objects.all(),
+        widget=BookSelect2Widget(
+            attrs={'data-minimum-input-length': 1}
+            ),
+    )
+
+BookFormset = forms.formset_factory(BooksForm)

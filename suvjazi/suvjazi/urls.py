@@ -24,7 +24,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('admin/', admin.site.urls),
     path('suvjazi_app/', include('suvjazi_app.urls')),
-    path('about/', views.about, name='about')
+    path('about/', views.about, name='about'),
+    path("select2/", include("django_select2.urls")),
 ]
 
 if settings.DEBUG:

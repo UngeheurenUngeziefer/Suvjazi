@@ -92,3 +92,12 @@ class CompanyMembership(models.Model):
         # method to show connections between Person and Company in admin panel
         return self.person.full_name + ' - ' + self.company.company_name
 
+
+
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.title
