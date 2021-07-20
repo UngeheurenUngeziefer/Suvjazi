@@ -7,14 +7,34 @@
         <div class="card-body">
         <table class="table">
         <!--for inline added titles-->
-        {% if object.has_titles %}
+        {% if memberships %}
+            <tr>
+          {% for membership in memberships %}
+                <th>Company</th>
+                <td>{{ membership }}</td>
+                <th>Date joined</th>
+                <td>{{ membership.date_joined }}</td>
+            </tr>
+          {% endfor %}
+          {% else %}
+            <tr>
+                <th>Company</th>
+                <td>No companies</td>
+            </tr>
+        {% endif %}
+
+
+
+
+        <!-- {% if object.has_titles %}
         {% for title in object.has_titles.all %}
         <tr>
             <th>Title @{{title.language}}</th>
             <td>{{title.name}}</td>
         </tr>
         {% endfor %}
-        {% endif %}
+        {% endif %} -->
+
         <!--end-->
     	{% if object.subject %}
     	<tr>

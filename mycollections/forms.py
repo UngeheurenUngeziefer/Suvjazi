@@ -1,5 +1,5 @@
 from django import forms
-from .models import Collection, CollectionTitle
+from .models import Collection, CollectionTitle, Membership
 from django.forms.models import inlineformset_factory
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Field, Fieldset, Div, Row, HTML, ButtonHolder, Submit
@@ -11,7 +11,7 @@ import re
 class CollectionTitleForm(forms.ModelForm):
 
     class Meta:
-        model = CollectionTitle
+        model = Membership
         exclude = ()
 
     def __init__(self, *args, **kwargs):
@@ -23,8 +23,9 @@ class CollectionTitleForm(forms.ModelForm):
         self.helper.form_tag = False
         self.helper.layout = Layout(
             Row(
-                Field('name'),
-                Field('language'),
+                Field('company'),
+                Field('salary'),
+                Field('date_joined'),
                 Field('DELETE'),
                 css_class='formset_row-{}'.format(formtag_prefix)
             )
@@ -32,8 +33,8 @@ class CollectionTitleForm(forms.ModelForm):
 
 
 CollectionTitleFormSet = inlineformset_factory(
-    Collection, CollectionTitle, form=CollectionTitleForm,
-    fields=['name', 'language'], extra=1, can_delete=True
+    Collection, Membership, form=CollectionTitleForm,
+    fields=['company', 'salary', 'date_joined'], extra=1, can_delete=True
 )
 
 
