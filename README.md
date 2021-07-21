@@ -49,8 +49,10 @@
 - [x] copy working version of nesting formset
 - [x] create new model for nested formset
 - [x] pass model.id to nested formset
-- [ ] fix html for nested formset
-
+- [x] fix html for nested formset
+- [ ] implement select2 for company field in nested formset
+- [ ] rename entities to current project
+- [ ] merge branches
 --------------------------------------------------------------------------------
 - [ ] for country field https://evileg.com/ru/post/608/ юзаем ChoiceField
 - [ ] check cyrillic slugs, add logic for cyrillic

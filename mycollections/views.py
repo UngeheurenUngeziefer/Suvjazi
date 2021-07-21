@@ -60,7 +60,12 @@ class CollectionCreate(CreateView):
         return super(CollectionCreate, self).form_valid(form)
 
     def get_success_url(self):
+        if self.request.is_ajax():
+            print(self.request.GET.get('term'))
+            compaies = CollectionTitle.objects.filter()
         return reverse_lazy('mycollections:collection_detail', kwargs={'pk': self.object.pk})
+
+    
 
 
     # @method_decorator(login_required)
